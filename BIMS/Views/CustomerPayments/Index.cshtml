@@ -1,0 +1,101 @@
+@model IEnumerable<BIMS.Models.CustomerPayment>
+@{
+    ViewData["Title"] = "Customer Payments";
+    var currentLang = Context.Session.GetString("Language") ?? "en";
+}
+
+<div class="masters-container">
+    <div class="masters-header">
+        <h1><i class="icon">💳</i> @(currentLang == "ar" ? "مدفوعات العملاء" : "Customer Payments")</h1>
+        <a asp-action="Create" class="btn-create">
+            <span>➕</span> @(currentLang == "ar" ? "إضافة دفعة جديدة" : "Add New Payment")
+        </a>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>@(currentLang == "ar" ? "رقم المرجع" : "Reference Number")</th>
+                    <th>@(currentLang == "ar" ? "العميل" : "Customer")</th>
+                    <th>@(currentLang == "ar" ? "رقم الفاتورة" : "Invoice Number")</th>
+                    <th>@(currentLang == "ar" ? "المبلغ" : "Amount")</th>
+                    <th>@(currentLang == "ar" ? "طريقة الدفع" : "Payment Method")</th>
+                    <th>@(currentLang == "ar" ? "تاريخ الدفع" : "Payment Date")</th>
+                    <th>@(currentLang == "ar" ? "الإجراءات" : "Actions")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><strong>@item.PaymentReference</strong></td>
+                        <td>@(currentLang == "ar" && !string.IsNullOrEmpty(item.Customer.CustomerNameAr) ? item.Customer.CustomerNameAr : item.Customer.CustomerName)</td>
+                        <td>@(item.SalesInvoice?.InvoiceNumber ?? "-")</td>
+                        <td>@item.Amount.ToString("N2") SAR</td>
+                        <td>
+                            @switch (item.PaymentMethod)
+                            {
+                                case "Cash":
+                                    <span class="badge badge-success">@(currentLang == "ar" ? "نقدي" : "Cash")</span>
+                                    break;
+                                case "Bank Transfer":
+                                    <span class="badge badge-info">@(currentLang == "ar" ? "تحويل بنكي" : "Bank Transfer")</span>
+                                    break;
+                                case "Cheque":
+                                    <span class="badge badge-warning">@(currentLang == "ar" ? "شيك" : "Cheque")</span>
+                                    break;
+                                case "Credit Card":
+                                    <span class="badge badge-primary">@(currentLang == "ar" ? "بطاقة ائتمان" : "Credit Card")</span>
+                                    break;
+                                default:
+                                    <span class="badge badge-light">@item.PaymentMethod</span>
+                                    break;
+                            }
+                        </td>
+                        <td>@item.PaymentDate.ToString("dd MMM yyyy")</td>
+                        <td class="actions">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn-view" title="Details">
+                                <span>👁️</span>
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn-edit" title="Edit">
+                                <span>✏️</span>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn-delete" title="Delete">
+                                <span>🗑️</span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .masters-container { padding: 20px; }
+    .masters-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+    .masters-header h1 { font-size: 28px; color: var(--navy-dark); display: flex; align-items: center; gap: 10px; }
+    .btn-create { padding: 12px 24px; background: linear-gradient(135deg, var(--primary-teal), var(--teal-dark)); color: white; border: none; border-radius: 8px; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; }
+    .btn-create:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 166, 166, 0.3); }
+    .table-container { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); overflow: hidden; }
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table thead { background: linear-gradient(135deg, var(--navy-dark), var(--navy-medium)); color: white; }
+    .data-table th { padding: 15px; text-align: left; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .data-table td { padding: 15px; border-bottom: 1px solid #f0f0f0; }
+    .data-table tbody tr:hover { background: #f8f9fa; }
+    .actions { display: flex; gap: 10px; }
+    .btn-view, .btn-edit, .btn-delete { padding: 8px 12px; border-radius: 6px; text-decoration: none; transition: all 0.3s ease; font-size: 16px; }
+    .btn-view { background: #17a2b8; color: white; }
+    .btn-view:hover { background: #138496; transform: scale(1.1); }
+    .btn-edit { background: #ffc107; color: white; }
+    .btn-edit:hover { background: #e0a800; transform: scale(1.1); }
+    .btn-delete { background: #dc3545; color: white; }
+    .btn-delete:hover { background: #c82333; transform: scale(1.1); }
+    .badge { padding: 5px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+    .badge-success { background: #28a745; color: white; }
+    .badge-info { background: #17a2b8; color: white; }
+    .badge-warning { background: #ffc107; color: #212529; }
+    .badge-primary { background: #007bff; color: white; }
+    .badge-light { background: #f8f9fa; color: #212529; }
+</style>

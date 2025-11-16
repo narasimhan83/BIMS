@@ -1,0 +1,329 @@
+@model BIMS.Models.State
+@{
+    ViewData["Title"] = "Create State";
+    var currentLang = Context.Session.GetString("Language") ?? "en";
+    var countries = ViewBag.Countries as IEnumerable<BIMS.Models.Country> ?? new List<BIMS.Models.Country>();
+}
+
+<div class="form-container">
+    <div class="form-header">
+        <h1><i class="icon">🗺️</i> @(currentLang == "ar" ? "إضافة ولاية جديدة" : "Create New State")</h1>
+        <a asp-action="States" class="btn-back">
+            <span>←</span> @(currentLang == "ar" ? "العودة إلى الولايات" : "Back to States")
+        </a>
+    </div>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            ✗ @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <div class="form-content">
+        <form asp-action="CreateState" method="post" class="master-form">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label asp-for="Name" class="form-label">
+                        @if (currentLang == "ar")
+                        {
+                            <span>اسم الولاية (بالإنجليزية) <span class="required">*</span></span>
+                        }
+                        else
+                        {
+                            <span>State Name (English) <span class="required">*</span></span>
+                        }
+                    </label>
+                    <input asp-for="Name" class="form-control" placeholder="@(currentLang == "ar" ? "أدخل اسم الولاية بالإنجليزية" : "Enter state name in English")" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NameAr" class="form-label">
+                        @if (currentLang == "ar")
+                        {
+                            <span>اسم الولاية (بالعربية)</span>
+                        }
+                        else
+                        {
+                            <span>اسم الولاية (عربي)</span>
+                        }
+                    </label>
+                    <input asp-for="NameAr" class="form-control" placeholder="@(currentLang == "ar" ? "أدخل اسم الولاية بالعربية" : "أدخل اسم الولاية بالعربية")" dir="rtl" />
+                    <span asp-validation-for="NameAr" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CountryId" class="form-label">
+                        @if (currentLang == "ar")
+                        {
+                            <span>الدولة <span class="required">*</span></span>
+                        }
+                        else
+                        {
+                            <span>Country <span class="required">*</span></span>
+                        }
+                    </label>
+                    <select asp-for="CountryId" class="form-control">
+                        <option value="">-- @(currentLang == "ar" ? "اختر الدولة" : "Select Country") --</option>
+                        @foreach (var country in countries)
+                        {
+                            <option value="@country.Id">@(currentLang == "ar" && !string.IsNullOrEmpty(country.NameAr) ? country.NameAr : country.Name)</option>
+                        }
+                    </select>
+                    <span asp-validation-for="CountryId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Code" class="form-label">
+                        @if (currentLang == "ar")
+                        {
+                            <span>رمز الولاية</span>
+                        }
+                        else
+                        {
+                            <span>State Code</span>
+                        }
+                    </label>
+                    <input asp-for="Code" class="form-control" placeholder="e.g., CA, TX" maxlength="50" />
+                    <span asp-validation-for="Code" class="text-danger"></span>
+                </div>
+
+                <div class="form-group full-width">
+                    <label asp-for="Description" class="form-label">
+                        @if (currentLang == "ar")
+                        {
+                            <span>الوصف (بالإنجليزية)</span>
+                        }
+                        else
+                        {
+                            <span>Description (English)</span>
+                        }
+                    </label>
+                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="@(currentLang == "ar" ? "أدخل وصف الولاية بالإنجليزية" : "Enter state description in English")"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group full-width">
+                    <label asp-for="DescriptionAr" class="form-label">
+                        @if (currentLang == "ar")
+                        {
+                            <span>الوصف (بالعربية)</span>
+                        }
+                        else
+                        {
+                            <span>الوصف (عربي)</span>
+                        }
+                    </label>
+                    <textarea asp-for="DescriptionAr" class="form-control" rows="3" placeholder="@(currentLang == "ar" ? "أدخل وصف الولاية بالعربية" : "أدخل وصف الولاية بالعربية")" dir="rtl"></textarea>
+                    <span asp-validation-for="DescriptionAr" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+                        <label asp-for="IsActive" class="form-check-label">
+                            @if (currentLang == "ar")
+                            {
+                                <span>نشط</span>
+                            }
+                            else
+                            {
+                                <span>Active</span>
+                            }
+                        </label>
+                    </div>
+                    <span asp-validation-for="IsActive" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    <span>💾</span> @(currentLang == "ar" ? "حفظ الولاية" : "Save State")
+                </button>
+                <a asp-action="States" class="btn-cancel">
+                    <span>✖</span> @(currentLang == "ar" ? "إلغاء" : "Cancel")
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .form-container {
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .form-header h1 {
+        font-size: 28px;
+        color: var(--navy-dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-back {
+        padding: 10px 20px;
+        background: #6c757d;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        background: #545b62;
+        transform: translateY(-1px);
+    }
+
+    .form-content {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .form-group.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--navy-dark);
+    }
+
+    .required {
+        color: #dc3545;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary-teal);
+        box-shadow: 0 0 0 3px rgba(0, 166, 166, 0.1);
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 8px;
+    }
+
+    .form-check-input {
+        width: 18px;
+        height: 18px;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-end;
+        border-top: 1px solid #e9ecef;
+        padding-top: 20px;
+    }
+
+    .btn-submit, .btn-cancel {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, var(--primary-teal), var(--teal-dark));
+        color: white;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 166, 166, 0.3);
+    }
+
+    .btn-cancel {
+        background: #6c757d;
+        color: white;
+    }
+
+    .btn-cancel:hover {
+        background: #545b62;
+        transform: translateY(-1px);
+    }
+
+    .alert {
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        animation: slideIn 0.3s ease;
+    }
+
+    .alert-danger {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    @@media (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .form-header {
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start;
+        }
+        
+        .form-actions {
+            flex-direction: column;
+        }
+    }
+</style>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,216 @@
+@model IEnumerable<BIMS.Models.SalesType>
+@{
+    ViewData["Title"] = "Sales Types";
+    var currentLang = Context.Session.GetString("Language") ?? "en";
+}
+
+<div class="masters-container">
+    <div class="masters-header">
+        <h1><i class="icon">💰</i> @(currentLang == "ar" ? "أنواع المبيعات" : "Sales Types")</h1>
+        <a asp-action="CreateSalesType" class="btn-create">
+            <span>➕</span> @(currentLang == "ar" ? "إضافة نوع مبيعات جديد" : "Add New Sales Type")
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            ✓ @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>@(currentLang == "ar" ? "اسم نوع المبيعات" : "Sales Type Name")</th>
+                    <th>@(currentLang == "ar" ? "الرمز" : "Code")</th>
+                    <th>@(currentLang == "ar" ? "الوصف" : "Description")</th>
+                    <th>@(currentLang == "ar" ? "الحالة" : "Status")</th>
+                    <th>@(currentLang == "ar" ? "تاريخ الإنشاء" : "Created Date")</th>
+                    <th>@(currentLang == "ar" ? "تاريخ التعديل" : "Modified Date")</th>
+                    <th>@(currentLang == "ar" ? "الإجراءات" : "Actions")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><strong>@(currentLang == "ar" && !string.IsNullOrEmpty(item.NameAr) ? item.NameAr : item.Name)</strong></td>
+                        <td>@(item.Code ?? "-")</td>
+                        <td>@(currentLang == "ar" && !string.IsNullOrEmpty(item.DescriptionAr) ? item.DescriptionAr : (item.Description ?? "-"))</td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge badge-success">@(currentLang == "ar" ? "نشط" : "Active")</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-danger">@(currentLang == "ar" ? "غير نشط" : "Inactive")</span>
+                            }
+                        </td>
+                        <td>@item.CreatedDate.ToLocalTime().ToString("dd MMM yyyy")</td>
+                        <td>@(item.ModifiedDate?.ToLocalTime().ToString("dd MMM yyyy") ?? "-")</td>
+                        <td class="actions">
+                            <a asp-action="EditSalesType" asp-route-id="@item.Id" class="btn-edit" title="Edit">
+                                <span>✏️</span>
+                            </a>
+                            <a asp-action="DeleteSalesType" asp-route-id="@item.Id" class="btn-delete" title="Delete">
+                                <span>🗑️</span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .masters-container {
+        padding: 20px;
+    }
+
+    .masters-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .masters-header h1 {
+        font-size: 28px;
+        color: var(--navy-dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-create {
+        padding: 12px 24px;
+        background: linear-gradient(135deg, var(--primary-teal), var(--teal-dark));
+        color: white;
+        border: none;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-create:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 166, 166, 0.3);
+    }
+
+    .alert {
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        animation: slideIn 0.3s ease;
+    }
+
+    .alert-success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .table-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .data-table thead {
+        background: linear-gradient(135deg, var(--navy-dark), var(--navy-medium));
+        color: white;
+    }
+
+    .data-table th {
+        padding: 15px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .data-table td {
+        padding: 15px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .data-table tbody tr:hover {
+        background: #f8f9fa;
+    }
+
+    .actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-edit, .btn-delete {
+        padding: 8px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 16px;
+    }
+
+    .btn-edit {
+        background: #ffc107;
+        color: white;
+    }
+
+    .btn-edit:hover {
+        background: #e0a800;
+        transform: scale(1.1);
+    }
+
+    .btn-delete {
+        background: #dc3545;
+        color: white;
+    }
+
+    .btn-delete:hover {
+        background: #c82333;
+        transform: scale(1.1);
+    }
+
+    .badge {
+        padding: 5px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .badge-success {
+        background: #28a745;
+        color: white;
+    }
+
+    .badge-danger {
+        background: #dc3545;
+        color: white;
+    }
+
+    @@keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

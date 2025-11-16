@@ -1,0 +1,702 @@
+@model BIMS.Models.Agent
+@{
+    ViewData["Title"] = "Create Agent";
+    var currentLang = Context.Session.GetString("Language") ?? "en";
+}
+
+<div class="form-container">
+    <div class="form-header">
+        <h1><i class="icon">👥</i> @(currentLang == "ar" ? "إضافة وكيل جديد" : "Create New Agent")</h1>
+        <a asp-action="Index" class="btn-back">
+            <span>←</span> @(currentLang == "ar" ? "العودة إلى الوكلاء" : "Back to Agents")
+        </a>
+    </div>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            ✗ @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <form asp-action="Create" method="post" class="agent-form">
+        <div class="form-sections">
+            <!-- Personal Information Section -->
+            <div class="form-section">
+                <h3>@(currentLang == "ar" ? "المعلومات الشخصية" : "Personal Information")</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label asp-for="Name" class="form-label">
+                            @if (currentLang == "ar")
+                            {
+                                <span>اسم الوكيل <span class="required">*</span></span>
+                            }
+                            else
+                            {
+                                <span>Agent Name <span class="required">*</span></span>
+                            }
+                        </label>
+                        <input asp-for="Name" class="form-control" placeholder="@(currentLang == "ar" ? "أدخل اسم الوكيل" : "Enter agent name")" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Phone" class="form-label">
+                            @if (currentLang == "ar")
+                            {
+                                <span>الهاتف <span class="required">*</span></span>
+                            }
+                            else
+                            {
+                                <span>Phone <span class="required">*</span></span>
+                            }
+                        </label>
+                        <input asp-for="Phone" class="form-control" placeholder="+966501234567" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Mobile" class="form-label">
+                            @if (currentLang == "ar")
+                            {
+                                <span>الجوال</span>
+                            }
+                            else
+                            {
+                                <span>Mobile</span>
+                            }
+                        </label>
+                        <input asp-for="Mobile" class="form-control" placeholder="+966501234567" />
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Email" class="form-label">
+                            @if (currentLang == "ar")
+                            {
+                                <span>البريد الإلكتروني <span class="required">*</span></span>
+                            }
+                            else
+                            {
+                                <span>Email <span class="required">*</span></span>
+                            }
+                        </label>
+                        <input asp-for="Email" type="email" class="form-control" placeholder="agent@example.com" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label asp-for="Address" class="form-label">
+                            @if (currentLang == "ar")
+                            {
+                                <span>العنوان <span class="required">*</span></span>
+                            }
+                            else
+                            {
+                                <span>Address <span class="required">*</span></span>
+                            }
+                        </label>
+                        <textarea asp-for="Address" class="form-control" rows="3" placeholder="@(currentLang == "ar" ? "أدخل العنوان الكامل" : "Enter full address")"></textarea>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location Information Section -->
+            <div class="form-section">
+                <h3>@(currentLang == "ar" ? "معلومات الموقع" : "Location Information")</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label asp-for="CountryId" class="form-label">
+                            @if (currentLang == "ar")
+                            {
+                                <span>الدولة <span class="required">*</span></span>
+                            }
+                            else
+                            {
+                                <span>Country <span class="required">*</span></span>
+                            }
+                        </label>
+                        <select asp-for="CountryId" class="form-control" asp-items="ViewBag.Countries" onchange="loadStates(this.value)">
+                            <option value="">@(currentLang == "ar" ? "اختر الدولة" : "Select Country")</option>
+                        </select>
+                        <span asp-validation-for="CountryId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="StateId" class="form-label">
+                            @if (currentLang == "ar")
+                            {
+                                <span>الولاية <span class="required">*</span></span>
+                            }
+                            else
+                            {
+                                <span>State <span class="required">*</span></span>
+                            }
+                        </label>
+                        <select asp-for="StateId" class="form-control" asp-items="ViewBag.States" onchange="loadCities(this.value)">
+                            <option value="">@(currentLang == "ar" ? "اختر الولاية" : "Select State")</option>
+                        </select>
+                        <span asp-validation-for="StateId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="CityId" class="form-label">
+                            @if (currentLang == "ar")
+                            {
+                                <span>المدينة <span class="required">*</span></span>
+                            }
+                            else
+                            {
+                                <span>City <span class="required">*</span></span>
+                            }
+                        </label>
+                        <select asp-for="CityId" class="form-control" asp-items="ViewBag.Cities">
+                            <option value="">@(currentLang == "ar" ? "اختر المدينة" : "Select City")</option>
+                        </select>
+                        <span asp-validation-for="CityId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input asp-for="IsActive" class="form-check-input" type="checkbox" checked />
+                            <label asp-for="IsActive" class="form-check-label">
+                                @if (currentLang == "ar")
+                                {
+                                    <span>نشط</span>
+                                }
+                                else
+                                {
+                                    <span>Active</span>
+                                }
+                            </label>
+                        </div>
+                        <span asp-validation-for="IsActive" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bank Details Section -->
+            <div class="form-section">
+                <h3>@(currentLang == "ar" ? "تفاصيل البنك" : "Bank Details")</h3>
+                <div id="bank-details-container">
+                    <div class="bank-detail-item" data-index="0">
+                        <div class="bank-header">
+                            <h4>@(currentLang == "ar" ? "البنك 1" : "Bank 1")</h4>
+                            <button type="button" class="btn-remove-bank" onclick="removeBankDetail(0)" style="display: none;">
+                                @(currentLang == "ar" ? "إزالة" : "Remove")
+                            </button>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    @if (currentLang == "ar")
+                                    {
+                                        <span>البنك <span class="required">*</span></span>
+                                    }
+                                    else
+                                    {
+                                        <span>Bank <span class="required">*</span></span>
+                                    }
+                                </label>
+                                <select name="bankDetails[0].BankId" class="form-control" asp-items="ViewBag.Banks">
+                                    <option value="">@(currentLang == "ar" ? "اختر البنك" : "Select Bank")</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    @if (currentLang == "ar")
+                                    {
+                                        <span>رقم IBAN <span class="required">*</span></span>
+                                    }
+                                    else
+                                    {
+                                        <span>IBAN Number <span class="required">*</span></span>
+                                    }
+                                </label>
+                                <input name="bankDetails[0].IbanNumber" class="form-control" placeholder="SA4410000001234567891234" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    @if (currentLang == "ar")
+                                    {
+                                        <span>رمز Swift <span class="required">*</span></span>
+                                    }
+                                    else
+                                    {
+                                        <span>Swift Code <span class="required">*</span></span>
+                                    }
+                                </label>
+                                <input name="bankDetails[0].SwiftCode" class="form-control" placeholder="ABCDSARI" maxlength="11" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    @if (currentLang == "ar")
+                                    {
+                                        <span>الفرع <span class="required">*</span></span>
+                                    }
+                                    else
+                                    {
+                                        <span>Branch <span class="required">*</span></span>
+                                    }
+                                </label>
+                                <input name="bankDetails[0].Branch" class="form-control" placeholder="@(currentLang == "ar" ? "اسم الفرع" : "Branch Name")" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    @if (currentLang == "ar")
+                                    {
+                                        <span>البنك الرئيسي</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Primary Bank</span>
+                                    }
+                                </label>
+                                <div class="checkbox-group">
+                                    <input name="bankDetails[0].IsPrimary" class="form-check-input" type="checkbox" />
+                                    <label class="form-check-label">
+                                        @(currentLang == "ar" ? "نعم" : "Yes")
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label class="form-label">
+                                    @if (currentLang == "ar")
+                                    {
+                                        <span>ملاحظات</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Notes</span>
+                                    }
+                                </label>
+                                <textarea name="bankDetails[0].Notes" class="form-control" rows="2" placeholder="@(currentLang == "ar" ? "ملاحظات إضافية" : "Additional notes")"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="add-bank-section">
+                    <button type="button" class="btn-add-bank" onclick="addBankDetail()">
+                        <span>+</span> @(currentLang == "ar" ? "إضافة بنك آخر" : "Add Another Bank")
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">
+                <span>💾</span> @(currentLang == "ar" ? "حفظ الوكيل" : "Save Agent")
+            </button>
+            <a asp-action="Index" class="btn-cancel">
+                <span>✖</span> @(currentLang == "ar" ? "إلغاء" : "Cancel")
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        let bankDetailIndex = 1;
+
+        function loadStates(countryId) {
+            if (!countryId) {
+                $('#StateId').html('<option value="">@(currentLang == "ar" ? "اختر الولاية" : "Select State")</option>');
+                $('#CityId').html('<option value="">@(currentLang == "ar" ? "اختر المدينة" : "Select City")</option>');
+                return;
+            }
+
+            $.get('/Agents/GetStatesByCountry', { countryId: countryId })
+                .done(function (data) {
+                    let options = '<option value="">@(currentLang == "ar" ? "اختر الولاية" : "Select State")</option>';
+                    data.forEach(function (state) {
+                        options += `<option value="${state.id}">${state.name}</option>`;
+                    });
+                    $('#StateId').html(options);
+                    $('#CityId').html('<option value="">@(currentLang == "ar" ? "اختر المدينة" : "Select City")</option>');
+                });
+        }
+
+        function loadCities(stateId) {
+            if (!stateId) {
+                $('#CityId').html('<option value="">@(currentLang == "ar" ? "اختر المدينة" : "Select City")</option>');
+                return;
+            }
+
+            $.get('/Agents/GetCitiesByState', { stateId: stateId })
+                .done(function (data) {
+                    let options = '<option value="">@(currentLang == "ar" ? "اختر المدينة" : "Select City")</option>';
+                    data.forEach(function (city) {
+                        options += `<option value="${city.id}">${city.name}</option>`;
+                    });
+                    $('#CityId').html(options);
+                });
+        }
+
+        function addBankDetail() {
+            const container = document.getElementById('bank-details-container');
+            const template = `
+                <div class="bank-detail-item" data-index="${bankDetailIndex}">
+                    <div class="bank-header">
+                        <h4>@(currentLang == "ar" ? "البنك" : "Bank") ${bankDetailIndex + 1}</h4>
+                        <button type="button" class="btn-remove-bank" onclick="removeBankDetail(${bankDetailIndex})">
+                            @(currentLang == "ar" ? "إزالة" : "Remove")
+                        </button>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">
+                                @if (currentLang == "ar")
+                                {
+                                    <text>البنك <span class="required">*</span></text>
+                                }
+                                else
+                                {
+                                    <text>Bank <span class="required">*</span></text>
+                                }
+                            </label>
+                            <select name="bankDetails[${bankDetailIndex}].BankId" class="form-control">
+                                <option value="">@(currentLang == "ar" ? "اختر البنك" : "Select Bank")</option>
+                                @foreach (var bank in ViewBag.Banks)
+                                {
+                                    <option value="@bank.Value">@bank.Text</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                @if (currentLang == "ar")
+                                {
+                                    <text>رقم IBAN <span class="required">*</span></text>
+                                }
+                                else
+                                {
+                                    <text>IBAN Number <span class="required">*</span></text>
+                                }
+                            </label>
+                            <input name="bankDetails[${bankDetailIndex}].IbanNumber" class="form-control" placeholder="SA4410000001234567891234" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                @if (currentLang == "ar")
+                                {
+                                    <text>رمز Swift <span class="required">*</span></text>
+                                }
+                                else
+                                {
+                                    <text>Swift Code <span class="required">*</span></text>
+                                }
+                            </label>
+                            <input name="bankDetails[${bankDetailIndex}].SwiftCode" class="form-control" placeholder="ABCDSARI" maxlength="11" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                @if (currentLang == "ar")
+                                {
+                                    <text>الفرع <span class="required">*</span></text>
+                                }
+                                else
+                                {
+                                    <text>Branch <span class="required">*</span></text>
+                                }
+                            </label>
+                            <input name="bankDetails[${bankDetailIndex}].Branch" class="form-control" placeholder="@(currentLang == "ar" ? "اسم الفرع" : "Branch Name")" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                @(currentLang == "ar" ? "البنك الرئيسي" : "Primary Bank")
+                            </label>
+                            <div class="checkbox-group">
+                                <input name="bankDetails[${bankDetailIndex}].IsPrimary" class="form-check-input" type="checkbox" />
+                                <label class="form-check-label">
+                                    @(currentLang == "ar" ? "نعم" : "Yes")
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label class="form-label">
+                                @(currentLang == "ar" ? "ملاحظات" : "Notes")
+                            </label>
+                            <textarea name="bankDetails[${bankDetailIndex}].Notes" class="form-control" rows="2" placeholder="@(currentLang == "ar" ? "ملاحظات إضافية" : "Additional notes")"></textarea>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', template);
+            bankDetailIndex++;
+        }
+
+        function removeBankDetail(index) {
+            const element = document.querySelector(`.bank-detail-item[data-index="${index}"]`);
+            if (element) {
+                element.remove();
+            }
+        }
+    </script>
+}
+
+<style>
+    .form-container {
+        padding: 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .form-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .form-header h1 {
+        font-size: 28px;
+        color: var(--navy-dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-back {
+        padding: 10px 20px;
+        background: #6c757d;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        background: #545b62;
+        transform: translateY(-1px);
+    }
+
+    .agent-form {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+    }
+
+    .form-sections {
+        margin-bottom: 30px;
+    }
+
+    .form-section {
+        margin-bottom: 40px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid var(--primary-teal);
+    }
+
+    .form-section h3 {
+        margin: 0 0 20px 0;
+        color: var(--navy-dark);
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .form-group.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--navy-dark);
+    }
+
+    .required {
+        color: #dc3545;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary-teal);
+        box-shadow: 0 0 0 3px rgba(0, 166, 166, 0.1);
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 8px;
+    }
+
+    .form-check-input {
+        width: 18px;
+        height: 18px;
+    }
+
+    .bank-detail-item {
+        background: white;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .bank-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .bank-header h4 {
+        margin: 0;
+        color: var(--navy-dark);
+        font-size: 16px;
+    }
+
+    .btn-remove-bank {
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+    }
+
+    .btn-remove-bank:hover {
+        background: #c82333;
+    }
+
+    .add-bank-section {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .btn-add-bank {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-add-bank:hover {
+        background: #218838;
+        transform: translateY(-1px);
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-end;
+        border-top: 1px solid #e9ecef;
+        padding-top: 20px;
+    }
+
+    .btn-submit, .btn-cancel {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, var(--primary-teal), var(--teal-dark));
+        color: white;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 166, 166, 0.3);
+    }
+
+    .btn-cancel {
+        background: #6c757d;
+        color: white;
+    }
+
+    .btn-cancel:hover {
+        background: #545b62;
+        transform: translateY(-1px);
+    }
+
+    .alert {
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        animation: slideIn 0.3s ease;
+    }
+
+    .alert-danger {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    @@media (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-header {
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .bank-header {
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-start;
+        }
+    }
+</style>

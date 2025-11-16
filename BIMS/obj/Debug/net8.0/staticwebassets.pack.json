@@ -1,0 +1,65 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Cursor\\BIMS\\wwwroot\\css\\login.css",
+      "PackagePath": "staticwebassets\\css\\login.css"
+    },
+    {
+      "Id": "C:\\Cursor\\BIMS\\wwwroot\\css\\rtl.css",
+      "PackagePath": "staticwebassets\\css\\rtl.css"
+    },
+    {
+      "Id": "C:\\Cursor\\BIMS\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Cursor\\BIMS\\wwwroot\\images\\aegis-logo.png",
+      "PackagePath": "staticwebassets\\images\\aegis-logo.png"
+    },
+    {
+      "Id": "C:\\Cursor\\BIMS\\wwwroot\\js\\customer-form.js",
+      "PackagePath": "staticwebassets\\js\\customer-form.js"
+    },
+    {
+      "Id": "C:\\Cursor\\BIMS\\wwwroot\\js\\language-switcher.js",
+      "PackagePath": "staticwebassets\\js\\language-switcher.js"
+    },
+    {
+      "Id": "C:\\Cursor\\BIMS\\wwwroot\\js\\vehicle-import.js",
+      "PackagePath": "staticwebassets\\js\\vehicle-import.js"
+    },
+    {
+      "Id": "C:\\Cursor\\BIMS\\wwwroot\\uploads\\documents\\3a30effb-63cb-4dc1-bcf9-ab2a1d387bde_PodhuThaniyan (1).pdf",
+      "PackagePath": "staticwebassets\\uploads\\documents\\3a30effb-63cb-4dc1-bcf9-ab2a1d387bde_PodhuThaniyan (1).pdf"
+    },
+    {
+      "Id": "C:\\Cursor\\BIMS\\wwwroot\\uploads\\documents\\8d2b027b-fad5-4541-83cb-9d1db8f05c17_Mrs Arul Mary Roche Packianathan Aloysius_6DHT67.pdf",
+      "PackagePath": "staticwebassets\\uploads\\documents\\8d2b027b-fad5-4541-83cb-9d1db8f05c17_Mrs Arul Mary Roche Packianathan Aloysius_6DHT67.pdf"
+    },
+    {
+      "Id": "C:\\Cursor\\BIMS\\wwwroot\\uploads\\insurance\\product-classes\\a997ca22-d4d0-486a-af50-efa0d2b4f269.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\insurance\\product-classes\\a997ca22-d4d0-486a-af50-efa0d2b4f269.jpeg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.BIMS.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.BIMS.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.BIMS.props",
+      "PackagePath": "build\\BIMS.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.BIMS.props",
+      "PackagePath": "buildMultiTargeting\\BIMS.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.BIMS.props",
+      "PackagePath": "buildTransitive\\BIMS.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

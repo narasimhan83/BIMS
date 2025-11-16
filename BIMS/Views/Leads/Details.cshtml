@@ -1,0 +1,443 @@
+@model BIMS.Models.Lead
+@{
+    ViewData["Title"] = "Lead Details";
+    var currentLang = Context.Session.GetString("Language") ?? "en";
+}
+
+<div class="details-container">
+    <div class="details-header">
+        <h1><i class="icon">👥</i> @(currentLang == "ar" ? "تفاصيل العميل المحتمل" : "Lead Details")</h1>
+        <div class="header-actions">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-edit">
+                <span>✏️</span> @(currentLang == "ar" ? "تعديل" : "Edit")
+            </a>
+            <a asp-action="Index" class="btn-back">
+                <span>←</span> @(currentLang == "ar" ? "العودة إلى العملاء المحتملين" : "Back to Leads")
+            </a>
+        </div>
+    </div>
+
+    <div class="details-content">
+        <div class="details-card">
+            <div class="card-header">
+                <h3>@(currentLang == "ar" ? "معلومات العميل المحتمل" : "Lead Information")</h3>
+            </div>
+            <div class="card-body">
+                <dl class="details-grid">
+                    <div class="detail-item">
+                        <dt>@(currentLang == "ar" ? "الاسم (إنجليزي)" : "Name (English)"):</dt>
+                        <dd>@Model.NameEn</dd>
+                    </div>
+                    <div class="detail-item">
+                        <dt>@(currentLang == "ar" ? "الاسم (عربي)" : "Name (Arabic)"):</dt>
+                        <dd>@(Model.NameAr ?? "-")</dd>
+                    </div>
+                    <div class="detail-item">
+                        <dt>@(currentLang == "ar" ? "البريد الإلكتروني" : "Email"):</dt>
+                        <dd>@Model.Email</dd>
+                    </div>
+                    <div class="detail-item">
+                        <dt>@(currentLang == "ar" ? "رقم الهاتف" : "Phone Number"):</dt>
+                        <dd>@Model.Phone</dd>
+                    </div>
+                    <div class="detail-item">
+                        <dt>@(currentLang == "ar" ? "الشركة (إنجليزي)" : "Company (English)"):</dt>
+                        <dd>@(Model.CompanyEn ?? "-")</dd>
+                    </div>
+                    <div class="detail-item">
+                        <dt>@(currentLang == "ar" ? "الشركة (عربي)" : "Company (Arabic)"):</dt>
+                        <dd>@(Model.CompanyAr ?? "-")</dd>
+                    </div>
+                    <div class="detail-item">
+                        <dt>@(currentLang == "ar" ? "مصدر العميل" : "Lead Source"):</dt>
+                        <dd>@Model.Source</dd>
+                    </div>
+                    <div class="detail-item">
+                        <dt>@(currentLang == "ar" ? "الحالة" : "Status"):</dt>
+                        <dd>
+                            @switch (Model.Status)
+                            {
+                                case "New":
+                                    <span class="badge badge-info">@(currentLang == "ar" ? "جديد" : "New")</span>
+                                    break;
+                                case "Contacted":
+                                    <span class="badge badge-warning">@(currentLang == "ar" ? "تم التواصل" : "Contacted")</span>
+                                    break;
+                                case "Qualified":
+                                    <span class="badge badge-primary">@(currentLang == "ar" ? "مؤهل" : "Qualified")</span>
+                                    break;
+                                case "Proposal":
+                                    <span class="badge badge-secondary">@(currentLang == "ar" ? "عرض" : "Proposal")</span>
+                                    break;
+                                case "Won":
+                                    <span class="badge badge-success">@(currentLang == "ar" ? "فاز" : "Won")</span>
+                                    break;
+                                case "Lost":
+                                    <span class="badge badge-danger">@(currentLang == "ar" ? "خسر" : "Lost")</span>
+                                    break;
+                                default:
+                                    <span class="badge badge-light">@Model.Status</span>
+                                    break;
+                            }
+                        </dd>
+                    </div>
+                    <div class="detail-item">
+                        <dt>@(currentLang == "ar" ? "القيمة المحتملة" : "Potential Value"):</dt>
+                        <dd>@Model.PotentialValue.ToString("N2") @(currentLang == "ar" ? "ريال" : "SAR")</dd>
+                    </div>
+                    <div class="detail-item">
+                        <dt>@(currentLang == "ar" ? "مُسند إلى" : "Assigned To"):</dt>
+                        <dd>@(Model.AssignedTo ?? "-")</dd>
+                    </div>
+                    <div class="detail-item">
+                        <dt>@(currentLang == "ar" ? "تاريخ الإنشاء" : "Created Date"):</dt>
+                        <dd>@Model.CreatedDate.ToLocalTime().ToString("dd MMM yyyy HH:mm")</dd>
+                    </div>
+                    <div class="detail-item">
+                        <dt>@(currentLang == "ar" ? "تاريخ آخر تواصل" : "Last Contact Date"):</dt>
+                        <dd>@(Model.LastContactDate?.ToLocalTime().ToString("dd MMM yyyy HH:mm") ?? "-")</dd>
+                    </div>
+                </dl>
+
+                @if (!string.IsNullOrEmpty(Model.Notes))
+                {
+                    <div class="notes-section">
+                        <h4>@(currentLang == "ar" ? "ملاحظات" : "Notes"):</h4>
+                        <p>@Model.Notes</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        @if (Model.Proposals != null && Model.Proposals.Any())
+        {
+            <div class="details-card">
+                <div class="card-header">
+                    <h3>@(currentLang == "ar" ? "العروض المقدمة" : "Proposals")</h3>
+                    <a asp-controller="Proposals" asp-action="Create" asp-route-leadId="@Model.Id" class="btn-create-small">
+                        <span>➕</span> @(currentLang == "ar" ? "إضافة عرض" : "Add Proposal")
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="proposals-list">
+                        @foreach (var proposal in Model.Proposals.OrderByDescending(p => p.CreatedDate))
+                        {
+                            <div class="proposal-item">
+                                <div class="proposal-info">
+                                    <h4>@(currentLang == "ar" && !string.IsNullOrEmpty(proposal.TitleAr) ? proposal.TitleAr : proposal.TitleEn)</h4>
+                                    <p>@(currentLang == "ar" ? "المبلغ" : "Amount"): @proposal.Amount.ToString("N2") SAR</p>
+                                    <p>@(currentLang == "ar" ? "الحالة" : "Status"): @proposal.Status</p>
+                                </div>
+                                <div class="proposal-actions">
+                                    <a asp-controller="Proposals" asp-action="Details" asp-route-id="@proposal.Id" class="btn-view-small">
+                                        <span>👁️</span>
+                                    </a>
+                                    <a asp-controller="Proposals" asp-action="Edit" asp-route-id="@proposal.Id" class="btn-edit-small">
+                                        <span>✏️</span>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="details-card">
+                <div class="card-header">
+                    <h3>@(currentLang == "ar" ? "العروض" : "Proposals")</h3>
+                </div>
+                <div class="card-body text-center">
+                    <p>@(currentLang == "ar" ? "لا توجد عروض لهذا العميل المحتمل" : "No proposals found for this lead")</p>
+                    <a asp-controller="Proposals" asp-action="Create" asp-route-leadId="@Model.Id" class="btn-create">
+                        <span>➕</span> @(currentLang == "ar" ? "إضافة عرض أول" : "Add First Proposal")
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .details-container {
+        padding: 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .details-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .details-header h1 {
+        font-size: 28px;
+        color: var(--navy-dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .header-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-edit, .btn-back {
+        padding: 10px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-edit {
+        background: #ffc107;
+        color: #212529;
+    }
+
+    .btn-edit:hover {
+        background: #e0a800;
+        transform: translateY(-1px);
+    }
+
+    .btn-back {
+        background: #6c757d;
+        color: white;
+    }
+
+    .btn-back:hover {
+        background: #545b62;
+        transform: translateY(-1px);
+    }
+
+    .details-content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .details-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, var(--navy-dark), var(--navy-medium));
+        color: white;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-header h3 {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .details-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .detail-item dt {
+        font-weight: 600;
+        color: var(--navy-dark);
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .detail-item dd {
+        color: #495057;
+        font-size: 16px;
+        margin: 0;
+    }
+
+    .notes-section {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #e9ecef;
+    }
+
+    .notes-section h4 {
+        color: var(--navy-dark);
+        margin-bottom: 10px;
+    }
+
+    .notes-section p {
+        color: #495057;
+        line-height: 1.6;
+    }
+
+    .proposals-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .proposal-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+    }
+
+    .proposal-info h4 {
+        margin: 0 0 5px 0;
+        color: var(--navy-dark);
+    }
+
+    .proposal-info p {
+        margin: 2px 0;
+        color: #6c757d;
+        font-size: 14px;
+    }
+
+    .proposal-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-view-small, .btn-edit-small {
+        padding: 8px;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 14px;
+    }
+
+    .btn-view-small {
+        background: #17a2b8;
+        color: white;
+    }
+
+    .btn-view-small:hover {
+        background: #138496;
+        transform: scale(1.1);
+    }
+
+    .btn-edit-small {
+        background: #ffc107;
+        color: #212529;
+    }
+
+    .btn-edit-small:hover {
+        background: #e0a800;
+        transform: scale(1.1);
+    }
+
+    .btn-create, .btn-create-small {
+        padding: 10px 15px;
+        background: linear-gradient(135deg, var(--primary-teal), var(--teal-dark));
+        color: white;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.3s ease;
+        font-size: 14px;
+    }
+
+    .btn-create:hover, .btn-create-small:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 166, 166, 0.3);
+    }
+
+    .badge {
+        padding: 5px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .badge-info {
+        background: #17a2b8;
+        color: white;
+    }
+
+    .badge-warning {
+        background: #ffc107;
+        color: #212529;
+    }
+
+    .badge-primary {
+        background: #007bff;
+        color: white;
+    }
+
+    .badge-secondary {
+        background: #6c757d;
+        color: white;
+    }
+
+    .badge-success {
+        background: #28a745;
+        color: white;
+    }
+
+    .badge-danger {
+        background: #dc3545;
+        color: white;
+    }
+
+    .badge-light {
+        background: #f8f9fa;
+        color: #212529;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    @@media (max-width: 768px) {
+        .details-header {
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .card-header {
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .proposal-item {
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .proposal-actions {
+            align-self: flex-end;
+        }
+    }
+</style>

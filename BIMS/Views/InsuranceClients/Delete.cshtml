@@ -1,0 +1,422 @@
+@model BIMS.Models.InsuranceClient
+@{
+    ViewData["Title"] = "Delete Insurance Client";
+    var currentLang = Context.Session.GetString("Language") ?? "en";
+}
+
+<div class="delete-container">
+    <div class="delete-header">
+        <h1><i class="icon">⚠️</i> @(currentLang == "ar" ? "حذف عميل التأمين" : "Delete Insurance Client")</h1>
+        <a asp-action="Index" class="btn-back">
+            <span>←</span> @(currentLang == "ar" ? "العودة إلى عملاء التأمين" : "Back to Insurance Clients")
+        </a>
+    </div>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            ✗ @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <div class="warning-box">
+        <h3>@(currentLang == "ar" ? "تحذير: سيتم حذف هذا العميل نهائياً" : "⚠️ WARNING: This client will be permanently deleted")</h3>
+        <p>@(currentLang == "ar" ? "هل أنت متأكد من رغبتك في حذف هذا العميل؟ سيتم حذف جميع تفاصيل البنوك المرتبطة به. لا يمكن التراجع عن هذا الإجراء." : "Are you sure you want to delete this client? All associated bank details will also be deleted. This action cannot be undone.")</p>
+    </div>
+
+    <div class="client-details">
+        <!-- Personal Information -->
+        <div class="details-section">
+            <h3>@(currentLang == "ar" ? "المعلومات الشخصية" : "Personal Information")</h3>
+            <div class="details-grid">
+                <div class="detail-item">
+                    <strong>@(currentLang == "ar" ? "اسم العميل:" : "Client Name:")</strong>
+                    <span>@(currentLang == "ar" && !string.IsNullOrEmpty(Model.NameAr) ? Model.NameAr : Model.Name)</span>
+                </div>
+
+                <div class="detail-item">
+                    <strong>@(currentLang == "ar" ? "الهاتف:" : "Phone:")</strong>
+                    <span>@Model.Phone</span>
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.Mobile))
+                {
+                    <div class="detail-item">
+                        <strong>@(currentLang == "ar" ? "الجوال:" : "Mobile:")</strong>
+                        <span>@Model.Mobile</span>
+                    </div>
+                }
+
+                <div class="detail-item">
+                    <strong>@(currentLang == "ar" ? "البريد الإلكتروني:" : "Email:")</strong>
+                    <span>@Model.Email</span>
+                </div>
+
+                <div class="detail-item full-width">
+                    <strong>@(currentLang == "ar" ? "العنوان:" : "Address:")</strong>
+                    <span>@Model.Address</span>
+                </div>
+
+                <div class="detail-item">
+                    <strong>@(currentLang == "ar" ? "الحالة:" : "Status:")</strong>
+                    <span>
+                        @if (Model.IsActive)
+                        {
+                            <span class="badge badge-success">@(currentLang == "ar" ? "نشط" : "Active")</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">@(currentLang == "ar" ? "غير نشط" : "Inactive")</span>
+                        }
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location Information -->
+        <div class="details-section">
+            <h3>@(currentLang == "ar" ? "معلومات الموقع" : "Location Information")</h3>
+            <div class="details-grid">
+                <div class="detail-item">
+                    <strong>@(currentLang == "ar" ? "الدولة:" : "Country:")</strong>
+                    <span>@(currentLang == "ar" && !string.IsNullOrEmpty(Model.Country?.NameAr) ? Model.Country?.NameAr : Model.Country?.Name)</span>
+                </div>
+
+                <div class="detail-item">
+                    <strong>@(currentLang == "ar" ? "الولاية:" : "State:")</strong>
+                    <span>@(currentLang == "ar" && !string.IsNullOrEmpty(Model.State?.NameAr) ? Model.State?.NameAr : Model.State?.Name)</span>
+                </div>
+
+                <div class="detail-item">
+                    <strong>@(currentLang == "ar" ? "المدينة:" : "City:")</strong>
+                    <span>@(currentLang == "ar" && !string.IsNullOrEmpty(Model.City?.NameAr) ? Model.City?.NameAr : Model.City?.Name)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bank Details -->
+        @if (Model.BankDetails != null && Model.BankDetails.Any(bd => bd.IsActive))
+        {
+            <div class="details-section">
+                <h3>@(currentLang == "ar" ? "تفاصيل البنوك المرتبطة" : "Associated Bank Details")</h3>
+                <div class="bank-details-list">
+                    @foreach (var bankDetail in Model.BankDetails.Where(bd => bd.IsActive))
+                    {
+                        <div class="bank-detail-card">
+                            <div class="bank-header">
+                                <h4>@(currentLang == "ar" && !string.IsNullOrEmpty(bankDetail.Bank?.NameAr) ? bankDetail.Bank?.NameAr : bankDetail.Bank?.Name)</h4>
+                                @if (bankDetail.IsPrimary)
+                                {
+                                    <span class="badge badge-primary">@(currentLang == "ar" ? "البنك الرئيسي" : "Primary Bank")</span>
+                                }
+                            </div>
+                            <div class="bank-details-grid">
+                                <div class="detail-item">
+                                    <strong>@(currentLang == "ar" ? "رقم IBAN:" : "IBAN Number:")</strong>
+                                    <span>@bankDetail.IbanNumber</span>
+                                </div>
+
+                                <div class="detail-item">
+                                    <strong>@(currentLang == "ar" ? "رمز Swift:" : "Swift Code:")</strong>
+                                    <span>@bankDetail.SwiftCode</span>
+                                </div>
+
+                                <div class="detail-item">
+                                    <strong>@(currentLang == "ar" ? "الفرع:" : "Branch:")</strong>
+                                    <span>@bankDetail.Branch</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="warning-text">
+                    <strong>@(currentLang == "ar" ? "تحذير:" : "Warning:")</strong> @(currentLang == "ar" ? "سيتم حذف جميع تفاصيل البنوك المرتبطة بهذا العميل." : "All bank details associated with this client will also be deleted.")
+                </div>
+            </div>
+        }
+
+        <!-- System Information -->
+        <div class="details-section">
+            <h3>@(currentLang == "ar" ? "معلومات النظام" : "System Information")</h3>
+            <div class="details-grid">
+                <div class="detail-item">
+                    <strong>@(currentLang == "ar" ? "تاريخ الإنشاء:" : "Created Date:")</strong>
+                    <span>@Model.CreatedDate.ToLocalTime().ToString("dd MMM yyyy HH:mm")</span>
+                </div>
+
+                @if (Model.ModifiedDate.HasValue)
+                {
+                    <div class="detail-item">
+                        <strong>@(currentLang == "ar" ? "تاريخ آخر تعديل:" : "Last Modified:")</strong>
+                        <span>@Model.ModifiedDate.Value.ToLocalTime().ToString("dd MMM yyyy HH:mm")</span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="delete-actions">
+        <form asp-action="Delete" method="post" style="display: inline;">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn-delete">
+                <span>🗑️</span> @(currentLang == "ar" ? "حذف العميل نهائياً" : "Delete Client Permanently")
+            </button>
+        </form>
+        <a asp-action="Index" class="btn-cancel">
+            <span>✖</span> @(currentLang == "ar" ? "إلغاء" : "Cancel")
+        </a>
+    </div>
+</div>
+
+<style>
+    .delete-container {
+        padding: 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .delete-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .delete-header h1 {
+        font-size: 28px;
+        color: #dc3545;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-back {
+        padding: 10px 20px;
+        background: #6c757d;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        background: #545b62;
+        transform: translateY(-1px);
+    }
+
+    .warning-box {
+        background: #fff3cd;
+        border: 2px solid #ffeaa7;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .warning-box h3 {
+        color: #856404;
+        margin-bottom: 10px;
+    }
+
+    .warning-box p {
+        color: #856404;
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .client-details {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .details-section {
+        margin-bottom: 30px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid #dc3545;
+    }
+
+    .details-section h3 {
+        margin: 0 0 20px 0;
+        color: var(--navy-dark);
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .details-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .detail-item.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .detail-item strong {
+        color: var(--navy-dark);
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .detail-item span {
+        color: #495057;
+        font-size: 16px;
+        padding: 8px 0;
+    }
+
+    .bank-details-list {
+        display: grid;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .bank-detail-card {
+        background: white;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 15px;
+    }
+
+    .bank-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .bank-header h4 {
+        margin: 0;
+        color: var(--navy-dark);
+        font-size: 16px;
+    }
+
+    .bank-details-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .warning-text {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #f5c6cb;
+        font-weight: 600;
+        margin-top: 15px;
+    }
+
+    .delete-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        border-top: 1px solid #e9ecef;
+        padding-top: 20px;
+    }
+
+    .btn-delete, .btn-cancel {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-delete {
+        background: #dc3545;
+        color: white;
+    }
+
+    .btn-delete:hover {
+        background: #c82333;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+    }
+
+    .btn-cancel {
+        background: #6c757d;
+        color: white;
+    }
+
+    .btn-cancel:hover {
+        background: #545b62;
+        transform: translateY(-1px);
+    }
+
+    .badge {
+        padding: 5px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .badge-success {
+        background: #28a745;
+        color: white;
+    }
+
+    .badge-danger {
+        background: #dc3545;
+        color: white;
+    }
+
+    .badge-primary {
+        background: #007bff;
+        color: white;
+    }
+
+    .alert {
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        animation: slideIn 0.3s ease;
+    }
+
+    .alert-danger {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    @@media (max-width: 768px) {
+        .delete-header {
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .details-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .bank-details-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .delete-actions {
+            flex-direction: column;
+        }
+    }
+</style>

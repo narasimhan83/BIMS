@@ -1,0 +1,252 @@
+@model BIMS.Models.LineOfBusiness
+@{
+    ViewData["Title"] = "Edit Line of Business";
+}
+
+<div class="form-container">
+    <div class="form-header">
+        <h1><i class="icon">✏️</i> Edit Line of Business</h1>
+        <a asp-action="LinesOfBusiness" class="btn-back">← Back to List</a>
+    </div>
+
+    <div class="form-card">
+        <form asp-action="EditLineOfBusiness" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreatedDate" />
+
+            <div class="form-group">
+                <label asp-for="InsuranceClientId" class="form-label"></label>
+                <select asp-for="InsuranceClientId" class="form-control" asp-items="ViewBag.InsuranceClients">
+                    <option value="">Select Insurance Client</option>
+                </select>
+                <span asp-validation-for="InsuranceClientId" class="text-danger"></span>
+            </div>
+
+            <div class="bilingual-row">
+                <div class="bilingual-col english">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Enter line of business name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="bilingual-col arabic">
+                    <label asp-for="NameAr" class="form-label"></label>
+                    <input asp-for="NameAr" class="form-control" placeholder="أدخل اسم خط العمل" dir="rtl" />
+                    <span asp-validation-for="NameAr" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Code" class="form-label"></label>
+                <input asp-for="Code" class="form-control" placeholder="Enter code (optional)" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+
+            <div class="bilingual-row">
+                <div class="bilingual-col english">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter description (optional)"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="bilingual-col arabic">
+                    <label asp-for="DescriptionAr" class="form-label"></label>
+                    <textarea asp-for="DescriptionAr" class="form-control" rows="4" placeholder="أدخل الوصف (اختياري)" dir="rtl"></textarea>
+                    <span asp-validation-for="DescriptionAr" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group checkbox-group">
+                <label class="checkbox-label">
+                    <input asp-for="IsActive" type="checkbox" />
+                    <span>Active</span>
+                </label>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    <span>💾</span> Update Line of Business
+                </button>
+                <a asp-action="LinesOfBusiness" class="btn-cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    .form-container {
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .form-header h1 {
+        font-size: 28px;
+        color: var(--navy-dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-back {
+        padding: 10px 20px;
+        background: #6c757d;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        background: #5a6268;
+        transform: translateX(-3px);
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: 600;
+        color: var(--navy-dark);
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary-teal);
+        box-shadow: 0 0 0 3px rgba(0, 166, 166, 0.1);
+    }
+
+    .checkbox-group {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        cursor: pointer;
+        accent-color: var(--primary-teal);
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn-submit {
+        flex: 1;
+        padding: 14px 24px;
+        background: linear-gradient(135deg, var(--primary-teal), var(--teal-dark));
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0, 166, 166, 0.3);
+    }
+
+    .btn-cancel {
+        padding: 14px 24px;
+        background: #6c757d;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-cancel:hover {
+        background: #5a6268;
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .validation-summary {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    /* Bilingual Form Layout */
+    .bilingual-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 25px;
+    }
+
+    .bilingual-col {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .bilingual-col.arabic input,
+    .bilingual-col.arabic textarea {
+        font-family: 'Tajawal', 'Cairo', sans-serif;
+    }
+
+    @@media (max-width: 768px) {
+        .bilingual-row {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+    }
+</style>

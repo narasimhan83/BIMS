@@ -1,0 +1,337 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Cursor\\BIMS\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\views\\policies\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:views\\policies\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\controllers\\insuranceclientscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:controllers\\insuranceclientscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\views\\agents\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:views\\agents\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\views\\insuranceclients\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:views\\insuranceclients\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\views\\insuranceclients\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:views\\insuranceclients\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\views\\masters\\editstate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:views\\masters\\editstate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\views\\masters\\editcity.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:views\\masters\\editcity.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\views\\masters\\states.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:views\\masters\\states.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\views\\masters\\deletestate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:views\\masters\\deletestate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\views\\masters\\deletecountry.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:views\\masters\\deletecountry.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\views\\masters\\createstate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:views\\masters\\createstate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\views\\masters\\deletecity.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:views\\masters\\deletecity.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\views\\masters\\createcity.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:views\\masters\\createcity.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\views\\masters\\cities.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:views\\masters\\cities.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|c:\\cursor\\bims\\views\\vehicle\\createvehiclemake.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4837D6F4-125C-4157-8EB0-279C3EDD4237}|BIMS.csproj|solutionrelative:views\\vehicle\\createvehiclemake.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 11,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:136:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:137:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{65ddf8c3-8f89-4077-a6c6-dbb8853aab13}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{007a3a6b-b5b2-454d-a2bd-cf929f989be2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\Views\\Policies\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Policies\\Index.cshtml",
+              "ToolTip": "C:\\Cursor\\BIMS\\Views\\Policies\\Index.cshtml",
+              "RelativeToolTip": "Views\\Policies\\Index.cshtml",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACUAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-13T21:52:05.169Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Cursor\\BIMS\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "wwwroot\\css\\site.css",
+              "ViewState": "AgIAAM8AAAAAAAAAAAAvwOYAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-13T21:33:35.625Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\Views\\Agents\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Views\\Agents\\Edit.cshtml",
+              "ToolTip": "C:\\Cursor\\BIMS\\Views\\Agents\\Edit.cshtml",
+              "RelativeToolTip": "Views\\Agents\\Edit.cshtml",
+              "ViewState": "AgIAAPMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-13T19:35:45.666Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\Views\\InsuranceClients\\Create.cshtml",
+              "RelativeDocumentMoniker": "Views\\InsuranceClients\\Create.cshtml",
+              "ToolTip": "C:\\Cursor\\BIMS\\Views\\InsuranceClients\\Create.cshtml",
+              "RelativeToolTip": "Views\\InsuranceClients\\Create.cshtml",
+              "ViewState": "AgIAAN4AAAAAAAAAAAAAANcAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-13T19:33:14.145Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\Views\\InsuranceClients\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Views\\InsuranceClients\\Edit.cshtml",
+              "ToolTip": "C:\\Cursor\\BIMS\\Views\\InsuranceClients\\Edit.cshtml",
+              "RelativeToolTip": "Views\\InsuranceClients\\Edit.cshtml",
+              "ViewState": "AgIAAOgAAAAAAAAAAAAWwPEAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-13T17:27:51.039Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "InsuranceClientsController.cs",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\Controllers\\InsuranceClientsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\InsuranceClientsController.cs",
+              "ToolTip": "C:\\Cursor\\BIMS\\Controllers\\InsuranceClientsController.cs",
+              "RelativeToolTip": "Controllers\\InsuranceClientsController.cs",
+              "ViewState": "AgIAAHkAAAAAAAAAAAAewJsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-13T17:25:44.333Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "EditState.cshtml",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\Views\\Masters\\EditState.cshtml",
+              "RelativeDocumentMoniker": "Views\\Masters\\EditState.cshtml",
+              "ToolTip": "C:\\Cursor\\BIMS\\Views\\Masters\\EditState.cshtml",
+              "RelativeToolTip": "Views\\Masters\\EditState.cshtml",
+              "ViewState": "AgIAADkAAAAAAAAAAAArwFUAAACDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-13T07:32:41.337Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "States.cshtml",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\Views\\Masters\\States.cshtml",
+              "RelativeDocumentMoniker": "Views\\Masters\\States.cshtml",
+              "ToolTip": "C:\\Cursor\\BIMS\\Views\\Masters\\States.cshtml",
+              "RelativeToolTip": "Views\\Masters\\States.cshtml",
+              "ViewState": "AgIAAMcAAAAAAAAAAAAqwNwAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-13T07:32:25.955Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "EditCity.cshtml",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\Views\\Masters\\EditCity.cshtml",
+              "RelativeDocumentMoniker": "Views\\Masters\\EditCity.cshtml",
+              "ToolTip": "C:\\Cursor\\BIMS\\Views\\Masters\\EditCity.cshtml",
+              "RelativeToolTip": "Views\\Masters\\EditCity.cshtml",
+              "ViewState": "AgIAADkAAAAAAAAAAAArwEkAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-13T07:32:20.993Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DeleteState.cshtml",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\Views\\Masters\\DeleteState.cshtml",
+              "RelativeDocumentMoniker": "Views\\Masters\\DeleteState.cshtml",
+              "ToolTip": "C:\\Cursor\\BIMS\\Views\\Masters\\DeleteState.cshtml",
+              "RelativeToolTip": "Views\\Masters\\DeleteState.cshtml",
+              "ViewState": "AgIAABwBAAAAAAAAAAArwDEBAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-13T07:31:28.902Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DeleteCountry.cshtml",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\Views\\Masters\\DeleteCountry.cshtml",
+              "RelativeDocumentMoniker": "Views\\Masters\\DeleteCountry.cshtml",
+              "ToolTip": "C:\\Cursor\\BIMS\\Views\\Masters\\DeleteCountry.cshtml",
+              "RelativeToolTip": "Views\\Masters\\DeleteCountry.cshtml",
+              "ViewState": "AgIAAB8BAAAAAAAAAAAqwDQBAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-13T07:31:24.375Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "CreateState.cshtml",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\Views\\Masters\\CreateState.cshtml",
+              "RelativeDocumentMoniker": "Views\\Masters\\CreateState.cshtml",
+              "ToolTip": "C:\\Cursor\\BIMS\\Views\\Masters\\CreateState.cshtml",
+              "RelativeToolTip": "Views\\Masters\\CreateState.cshtml",
+              "ViewState": "AgIAACABAAAAAAAAAAAqwDUBAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-13T07:31:20.421Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "DeleteCity.cshtml",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\Views\\Masters\\DeleteCity.cshtml",
+              "RelativeDocumentMoniker": "Views\\Masters\\DeleteCity.cshtml",
+              "ToolTip": "C:\\Cursor\\BIMS\\Views\\Masters\\DeleteCity.cshtml",
+              "RelativeToolTip": "Views\\Masters\\DeleteCity.cshtml",
+              "ViewState": "AgIAAPoAAAAAAAAAAAAqwA8BAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-13T07:21:49.28Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "CreateCity.cshtml",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\Views\\Masters\\CreateCity.cshtml",
+              "RelativeDocumentMoniker": "Views\\Masters\\CreateCity.cshtml",
+              "ToolTip": "C:\\Cursor\\BIMS\\Views\\Masters\\CreateCity.cshtml",
+              "RelativeToolTip": "Views\\Masters\\CreateCity.cshtml",
+              "ViewState": "AgIAACMBAAAAAAAAAAAqwDgBAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-13T07:21:42.97Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Cities.cshtml",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\Views\\Masters\\Cities.cshtml",
+              "RelativeDocumentMoniker": "Views\\Masters\\Cities.cshtml",
+              "ToolTip": "C:\\Cursor\\BIMS\\Views\\Masters\\Cities.cshtml",
+              "RelativeToolTip": "Views\\Masters\\Cities.cshtml",
+              "ViewState": "AgIAAMcAAAAAAAAAAAAQwNwAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-13T07:21:36.293Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "CreateVehicleMake.cshtml",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\Views\\Vehicle\\CreateVehicleMake.cshtml",
+              "RelativeDocumentMoniker": "Views\\Vehicle\\CreateVehicleMake.cshtml",
+              "ToolTip": "C:\\Cursor\\BIMS\\Views\\Vehicle\\CreateVehicleMake.cshtml",
+              "RelativeToolTip": "Views\\Vehicle\\CreateVehicleMake.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-11T19:54:54.347Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Cursor\\BIMS\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Cursor\\BIMS\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-11T12:19:51.853Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

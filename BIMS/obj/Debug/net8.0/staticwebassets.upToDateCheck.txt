@@ -1,0 +1,10 @@
+wwwroot\css\login.css
+wwwroot\css\rtl.css
+wwwroot\css\site.css
+wwwroot\images\aegis-logo.png
+wwwroot\js\customer-form.js
+wwwroot\js\language-switcher.js
+wwwroot\js\vehicle-import.js
+wwwroot\uploads\documents\3a30effb-63cb-4dc1-bcf9-ab2a1d387bde_PodhuThaniyan (1).pdf
+wwwroot\uploads\documents\8d2b027b-fad5-4541-83cb-9d1db8f05c17_Mrs Arul Mary Roche Packianathan Aloysius_6DHT67.pdf
+wwwroot\uploads\insurance\product-classes\a997ca22-d4d0-486a-af50-efa0d2b4f269.jpeg
