@@ -45,6 +45,7 @@ namespace BIMS.Data
         // Insurance Management DbSets
         public DbSet<InsuranceClient> InsuranceClients { get; set; }
         public DbSet<InsuranceClientBankDetail> InsuranceClientBankDetails { get; set; }
+        public DbSet<InsurancePlan> InsurancePlans { get; set; }
         public DbSet<LineOfBusiness> LinesOfBusiness { get; set; }
         public DbSet<ProductClass> ProductClasses { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
@@ -261,6 +262,13 @@ namespace BIMS.Data
                 .WithMany(vt => vt.CustomerVehicles)
                 .HasForeignKey(cv => cv.VehicleTypeId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            // Configure InsurancePlan relationships
+            builder.Entity<InsurancePlan>()
+                .HasOne(ip => ip.InsuranceClient)
+                .WithMany(ic => ic.InsurancePlans)
+                .HasForeignKey(ip => ip.InsuranceClientId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Configure LineOfBusiness relationships
             builder.Entity<LineOfBusiness>()

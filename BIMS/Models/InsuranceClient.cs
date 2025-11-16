@@ -64,6 +64,7 @@ namespace BIMS.Models
         public virtual State? State { get; set; }
         public virtual City? City { get; set; }
         public virtual ICollection<InsuranceClientBankDetail>? BankDetails { get; set; }
+        public virtual ICollection<InsurancePlan>? InsurancePlans { get; set; }
         public virtual ICollection<LineOfBusiness>? LinesOfBusiness { get; set; }
     }
 }
