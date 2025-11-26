@@ -47,6 +47,23 @@
                     </div>
 
                     <div class="form-group">
+                        <label asp-for="LineOfBusinessId" class="form-label">
+                            @if (currentLang == "ar")
+                            {
+                                <span>خط العمل <span class="required">*</span></span>
+                            }
+                            else
+                            {
+                                <span>Line of Business <span class="required">*</span></span>
+                            }
+                        </label>
+                        <select asp-for="LineOfBusinessId" class="form-control" asp-items="ViewBag.LinesOfBusiness">
+                            <option value="">@(currentLang == "ar" ? "اختر خط العمل" : "Select Line of Business")</option>
+                        </select>
+                        <span asp-validation-for="LineOfBusinessId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
                         <label asp-for="PlanName" class="form-label">
                             @if (currentLang == "ar")
                             {
@@ -139,6 +156,84 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        (function () {
+            const currentLang = '@currentLang';
+            const ddlClient = document.getElementById('InsuranceClientId');
+            const ddlLob = document.getElementById('LineOfBusinessId');
+
+            function clearLobs() {
+                if (!ddlLob) return;
+                ddlLob.innerHTML = '';
+                const opt = document.createElement('option');
+                opt.value = '';
+                opt.textContent = currentLang === 'ar' ? 'اختر خط العمل' : 'Select Line of Business';
+                ddlLob.appendChild(opt);
+            }
+
+            async function loadLobs(clientId, preselect) {
+                clearLobs();
+                if (!clientId) return;
+                try {
+                    const res = await fetch(`/InsurancePlans/GetLinesOfBusiness?insuranceClientId=${clientId}`);
+                    if (!res.ok) return;
+                    const data = await res.json();
+                    for (const l of data) {
+                        const opt = document.createElement('option');
+                        opt.value = l.id;
+                        opt.textContent = (currentLang === 'ar' && l.nameAr) ? l.nameAr : l.name;
+                        ddlLob.appendChild(opt);
+                    }
+                    if (preselect) {
+                        ddlLob.value = preselect;
+                    }
+                } catch (e) {
+                    console.error('Failed to load lines of business', e);
+                }
+            }
+
+            ddlClient?.addEventListener('change', (e) => {
+                loadLobs(e.target.value, null);
+            });
+
+            // Initial population with the current values
+            if (ddlClient?.value) {
+                loadLobs(ddlClient.value, ddlLob?.value);
+            } else {
+                clearLobs();
+            }
+        })();
+    </script>
+
+    <!-- Summernote (MIT-licensed open source WYSIWYG editor) -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+    <script>
+        function initPlanEditors() {
+            // English description
+            var $desc = $('#Description');
+            if ($desc.length && !$desc.data('summernote')) {
+                $desc.summernote({
+                    height: 150
+                });
+            }
+
+            // Arabic description (RTL)
+            var $descAr = $('#DescriptionAr');
+            if ($descAr.length && !$descAr.data('summernote')) {
+                $descAr.summernote({
+                    height: 150
+                });
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPlanEditors);
+        } else {
+            initPlanEditors();
+        }
+    </script>
 }
 
 <style>

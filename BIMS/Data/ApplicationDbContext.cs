@@ -53,6 +53,7 @@ namespace BIMS.Data
         // CRM DbSets
         public DbSet<Lead> Leads { get; set; }
         public DbSet<Proposal> Proposals { get; set; }
+        public DbSet<LeadSource> LeadSources { get; set; }
 
         // Policy Management DbSets
         public DbSet<Policy> Policies { get; set; }
@@ -268,6 +269,13 @@ namespace BIMS.Data
                 .HasOne(ip => ip.InsuranceClient)
                 .WithMany(ic => ic.InsurancePlans)
                 .HasForeignKey(ip => ip.InsuranceClientId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // InsurancePlan -> LineOfBusiness (FK)
+            builder.Entity<InsurancePlan>()
+                .HasOne(ip => ip.LineOfBusiness)
+                .WithMany()
+                .HasForeignKey(ip => ip.LineOfBusinessId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Configure LineOfBusiness relationships

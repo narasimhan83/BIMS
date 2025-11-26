@@ -100,14 +100,8 @@
                             <span>Lead Source <span class="required">*</span></span>
                         }
                     </label>
-                    <select asp-for="Source" class="form-control">
+                    <select asp-for="Source" class="form-control" asp-items="ViewBag.LeadSources">
                         <option value="">@(currentLang == "ar" ? "اختر المصدر" : "Select Source")</option>
-                        <option value="Website">@(currentLang == "ar" ? "الموقع الإلكتروني" : "Website")</option>
-                        <option value="Referral">@(currentLang == "ar" ? "إحالة" : "Referral")</option>
-                        <option value="Cold Call">@(currentLang == "ar" ? "اتصال بارد" : "Cold Call")</option>
-                        <option value="Social Media">@(currentLang == "ar" ? "وسائل التواصل الاجتماعي" : "Social Media")</option>
-                        <option value="Trade Show">@(currentLang == "ar" ? "معرض تجاري" : "Trade Show")</option>
-                        <option value="Other">@(currentLang == "ar" ? "أخرى" : "Other")</option>
                     </select>
                     <span asp-validation-for="Source" class="text-danger"></span>
                 </div>

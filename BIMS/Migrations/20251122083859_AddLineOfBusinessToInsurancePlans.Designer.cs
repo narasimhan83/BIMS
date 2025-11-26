@@ -4,6 +4,7 @@ using BIMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BIMS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251122083859_AddLineOfBusinessToInsurancePlans")]
+    partial class AddLineOfBusinessToInsurancePlans
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -791,7 +794,7 @@ namespace BIMS.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2025, 11, 24, 8, 54, 55, 385, DateTimeKind.Utc).AddTicks(4074),
+                            CreatedDate = new DateTime(2025, 11, 22, 8, 38, 58, 492, DateTimeKind.Utc).AddTicks(8615),
                             Description = "Individual customer type",
                             IsActive = true,
                             Name = "Individual"
@@ -799,7 +802,7 @@ namespace BIMS.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2025, 11, 24, 8, 54, 55, 385, DateTimeKind.Utc).AddTicks(4077),
+                            CreatedDate = new DateTime(2025, 11, 22, 8, 38, 58, 492, DateTimeKind.Utc).AddTicks(8618),
                             Description = "Company customer type",
                             IsActive = true,
                             Name = "Company"
@@ -807,7 +810,7 @@ namespace BIMS.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2025, 11, 24, 8, 54, 55, 385, DateTimeKind.Utc).AddTicks(4079),
+                            CreatedDate = new DateTime(2025, 11, 22, 8, 38, 58, 492, DateTimeKind.Utc).AddTicks(8620),
                             Description = "Group customer type",
                             IsActive = true,
                             Name = "Group"
@@ -1253,49 +1256,6 @@ namespace BIMS.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Leads");
-                });
-
-            modelBuilder.Entity("BIMS.Models.LeadSource", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("DescriptionAr")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("NameAr")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LeadSources");
                 });
 
             modelBuilder.Entity("BIMS.Models.LineOfBusiness", b =>

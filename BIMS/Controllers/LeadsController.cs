@@ -57,6 +57,7 @@ namespace BIMS.Controllers
         // GET: Leads/Create
         public IActionResult Create()
         {
+            PopulateLeadSourceList();
             return View();
         }
 
@@ -72,6 +73,9 @@ namespace BIMS.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            // Repopulate lead source dropdown when validation fails
+            PopulateLeadSourceList(lead.Source);
             return View(lead);
         }
 
@@ -321,6 +325,23 @@ namespace BIMS.Controllers
                 _logger.LogError(ex, "Error creating customer from lead");
                 return Json(new { success = false, message = "Error creating customer" });
             }
+        }
+
+        private void PopulateLeadSourceList(string? selectedSource = null)
+        {
+            var currentLang = HttpContext.Session.GetString("Language") ?? "en";
+
+            var sources = _context.LeadSources
+                .Where(ls => ls.IsActive)
+                .OrderBy(ls => ls.Name)
+                .Select(ls => new SelectListItem
+                {
+                    Value = ls.Name,
+                    Text = currentLang == "ar" && !string.IsNullOrEmpty(ls.NameAr) ? ls.NameAr : ls.Name
+                })
+                .ToList();
+
+            ViewBag.LeadSources = new SelectList(sources, "Value", "Text", selectedSource);
         }
 
         private bool LeadExists(int id)

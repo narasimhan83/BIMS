@@ -1209,5 +1209,129 @@ namespace BIMS.Controllers
         {
             return _context.VehicleTypes.Any(e => e.Id == id);
         }
+
+        // ============================================
+        // LEAD SOURCE CRUD OPERATIONS
+        // ============================================
+
+        // GET: Masters/LeadSources
+        public async Task<IActionResult> LeadSources()
+        {
+            var leadSources = await _context.LeadSources
+                .OrderByDescending(ls => ls.CreatedDate)
+                .ToListAsync();
+            return View(leadSources);
+        }
+
+        // GET: Masters/CreateLeadSource
+        public IActionResult CreateLeadSource()
+        {
+            return View();
+        }
+
+        // POST: Masters/CreateLeadSource
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateLeadSource([Bind("Name,NameAr,Code,Description,DescriptionAr,IsActive")] LeadSource leadSource)
+        {
+            if (ModelState.IsValid)
+            {
+                leadSource.CreatedDate = DateTime.UtcNow;
+                _context.Add(leadSource);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Lead Source created successfully!";
+                return RedirectToAction(nameof(LeadSources));
+            }
+            return View(leadSource);
+        }
+
+        // GET: Masters/EditLeadSource/5
+        public async Task<IActionResult> EditLeadSource(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var leadSource = await _context.LeadSources.FindAsync(id);
+            if (leadSource == null)
+            {
+                return NotFound();
+            }
+            return View(leadSource);
+        }
+
+        // POST: Masters/EditLeadSource/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditLeadSource(int id, [Bind("Id,Name,NameAr,Code,Description,DescriptionAr,IsActive,CreatedDate")] LeadSource leadSource)
+        {
+            if (id != leadSource.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    leadSource.ModifiedDate = DateTime.UtcNow;
+                    _context.Update(leadSource);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Lead Source updated successfully!";
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!LeadSourceExists(leadSource.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(LeadSources));
+            }
+            return View(leadSource);
+        }
+
+        // GET: Masters/DeleteLeadSource/5
+        public async Task<IActionResult> DeleteLeadSource(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var leadSource = await _context.LeadSources
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (leadSource == null)
+            {
+                return NotFound();
+            }
+
+            return View(leadSource);
+        }
+
+        // POST: Masters/DeleteLeadSourceConfirmed/5
+        [HttpPost, ActionName("DeleteLeadSource")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteLeadSourceConfirmed(int id)
+        {
+            var leadSource = await _context.LeadSources.FindAsync(id);
+            if (leadSource != null)
+            {
+                _context.LeadSources.Remove(leadSource);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Lead Source deleted successfully!";
+            }
+            return RedirectToAction(nameof(LeadSources));
+        }
+
+        private bool LeadSourceExists(int id)
+        {
+            return _context.LeadSources.Any(e => e.Id == id);
+        }
     }
 }

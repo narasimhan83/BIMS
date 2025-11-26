@@ -11,6 +11,10 @@ namespace BIMS.Models
         [Display(Name = "Insurance Client")]
         public int InsuranceClientId { get; set; }
 
+        [Required(ErrorMessage = "Line of Business is required")]
+        [Display(Name = "Line of Business")]
+        public int LineOfBusinessId { get; set; }
+
         [Required(ErrorMessage = "Plan Name is required")]
         [StringLength(200, ErrorMessage = "Plan Name cannot exceed 200 characters")]
         [Display(Name = "Plan Name (English)")]
@@ -39,5 +43,6 @@ namespace BIMS.Models
 
         // Navigation properties
         public virtual InsuranceClient? InsuranceClient { get; set; }
+        public virtual LineOfBusiness? LineOfBusiness { get; set; }
     }
 }
