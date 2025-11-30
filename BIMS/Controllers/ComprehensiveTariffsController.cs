@@ -157,71 +157,57 @@ namespace BIMS.Controllers
         {
             var currentLang = HttpContext.Session.GetString("Language") ?? "en";
 
-            try
-            {
-                // Insurance Plans
-                var plans = await _context.InsurancePlans
-                    .Where(p => p.IsActive)
-                    .OrderBy(p => p.PlanName)
-                    .ToListAsync();
-                ViewBag.InsurancePlans = new SelectList(
-                    plans,
-                    "Id",
-                    currentLang == "ar"
-                        ? nameof(InsurancePlan.PlanNameAr)
-                        : nameof(InsurancePlan.PlanName),
-                    selectedPlanId);
+            // Insurance Plans
+            // Project only the columns needed for the dropdown to avoid SqlNullValueException
+            // from any legacy NULLs in other columns (e.g., foreign keys).
+            var planItems = await _context.InsurancePlans
+                .OrderBy(p => p.PlanName)
+                .Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = currentLang == "ar" && !string.IsNullOrEmpty(p.PlanNameAr)
+                        ? p.PlanNameAr
+                        : p.PlanName
+                })
+                .ToListAsync();
 
-                // Value Bands
-                var bands = await _context.ValueBands
-                    .Where(v => v.IsActive)
-                    .OrderBy(v => v.ValueFrom)
-                    .ToListAsync();
-                ViewBag.ValueBands = new SelectList(
-                    bands,
-                    "Id",
-                    currentLang == "ar"
-                        ? nameof(ValueBand.DisplayNameAr)
-                        : nameof(ValueBand.DisplayName),
-                    selectedValueBandId);
+            ViewBag.InsurancePlans = planItems;
 
-                // Vehicle Categories
-                var categories = await _context.VehicleCategories
-                    .Where(c => c.IsActive)
-                    .OrderBy(c => c.CategoryName)
-                    .ToListAsync();
-                ViewBag.VehicleCategories = new SelectList(
-                    categories,
-                    "Id",
-                    currentLang == "ar"
-                        ? nameof(VehicleCategory.CategoryNameAr)
-                        : nameof(VehicleCategory.CategoryName),
-                    selectedVehicleCategoryId);
+            // Value Bands
+            var bands = await _context.ValueBands
+                .OrderBy(v => v.ValueFrom)
+                .ToListAsync();
+            ViewBag.ValueBands = new SelectList(
+                bands,
+                "Id",
+                currentLang == "ar"
+                    ? nameof(ValueBand.DisplayNameAr)
+                    : nameof(ValueBand.DisplayName),
+                selectedValueBandId);
 
-                // Vehicle Types
-                var types = await _context.VehicleTypes
-                    .Where(v => v.IsActive)
-                    .OrderBy(v => v.TypeName)
-                    .ToListAsync();
-                ViewBag.VehicleTypes = new SelectList(
-                    types,
-                    "Id",
-                    currentLang == "ar"
-                        ? nameof(VehicleType.TypeNameAr)
-                        : nameof(VehicleType.TypeName),
-                    selectedVehicleTypeId);
-            }
-            catch (Exception ex)
-            {
-                // If there is any data or mapping issue (e.g., nulls in non-nullable DB columns),
-                // log it and fall back to empty dropdowns so the page still loads.
-                _logger.LogError(ex, "Error loading dropdown data for Comprehensive Tariffs; rendering with empty lists.");
+            // Vehicle Categories
+            var categories = await _context.VehicleCategories
+                .OrderBy(c => c.CategoryName)
+                .ToListAsync();
+            ViewBag.VehicleCategories = new SelectList(
+                categories,
+                "Id",
+                currentLang == "ar"
+                    ? nameof(VehicleCategory.CategoryNameAr)
+                    : nameof(VehicleCategory.CategoryName),
+                selectedVehicleCategoryId);
 
-                ViewBag.InsurancePlans = new SelectList(Enumerable.Empty<InsurancePlan>(), "Id", "PlanName", selectedPlanId);
-                ViewBag.ValueBands = new SelectList(Enumerable.Empty<ValueBand>(), "Id", "DisplayName", selectedValueBandId);
-                ViewBag.VehicleCategories = new SelectList(Enumerable.Empty<VehicleCategory>(), "Id", "CategoryName", selectedVehicleCategoryId);
-                ViewBag.VehicleTypes = new SelectList(Enumerable.Empty<VehicleType>(), "Id", "TypeName", selectedVehicleTypeId);
-            }
+            // Vehicle Types
+            var types = await _context.VehicleTypes
+                .OrderBy(v => v.TypeName)
+                .ToListAsync();
+            ViewBag.VehicleTypes = new SelectList(
+                types,
+                "Id",
+                currentLang == "ar"
+                    ? nameof(VehicleType.TypeNameAr)
+                    : nameof(VehicleType.TypeName),
+                selectedVehicleTypeId);
         }
     }
 }
