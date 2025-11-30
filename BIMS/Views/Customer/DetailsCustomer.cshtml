@@ -41,7 +41,7 @@
             @if (Model.DateOfBirth.HasValue)
             {
                 <dt>@(currentLang == "ar" ? "تاريخ الميلاد:" : "Date of Birth:")</dt>
-                <dd>@Model.DateOfBirth.Value.ToString("dd MMMM yyyy")</dd>
+                <dd>@Model.DateOfBirth.Value.ToString("dd/MM/yyyy")</dd>
             }
         </dl>
 
@@ -70,7 +70,7 @@
             @if (Model.CPRExpiryDate.HasValue)
             {
                 <dt>@(currentLang == "ar" ? "تاريخ انتهاء السجل المدني:" : "CPR Expiry Date:")</dt>
-                <dd>@Model.CPRExpiryDate.Value.ToString("dd MMMM yyyy")</dd>
+                <dd>@Model.CPRExpiryDate.Value.ToString("dd/MM/yyyy")</dd>
             }
 
             @if (!string.IsNullOrEmpty(Model.PassportNo))
@@ -82,13 +82,13 @@
             @if (Model.PassportIssueDate.HasValue)
             {
                 <dt>@(currentLang == "ar" ? "تاريخ إصدار جواز السفر:" : "Passport Issue Date:")</dt>
-                <dd>@Model.PassportIssueDate.Value.ToString("dd MMMM yyyy")</dd>
+                <dd>@Model.PassportIssueDate.Value.ToString("dd/MM/yyyy")</dd>
             }
 
             @if (Model.PassportExpiryDate.HasValue)
             {
                 <dt>@(currentLang == "ar" ? "تاريخ انتهاء جواز السفر:" : "Passport Expiry Date:")</dt>
-                <dd>@Model.PassportExpiryDate.Value.ToString("dd MMMM yyyy")</dd>
+                <dd>@Model.PassportExpiryDate.Value.ToString("dd/MM/yyyy")</dd>
             }
         </dl>
 
@@ -138,7 +138,14 @@
                             <dt>@(currentLang == "ar" ? "السنة:" : "Year:")</dt>
                             <dd>@(vehicle.VehicleYear?.Year)</dd>
                             <dt>@(currentLang == "ar" ? "السعة:" : "Capacity:")</dt>
-                            <dd>@(vehicle.EngineCapacity?.Capacity) CC</dd>
+                            <dd>
+                                @{
+                                    var capacityText = vehicle.EngineCapacity == null
+                                        ? "-"
+                                        : $"{vehicle.EngineCapacity.CapacityFrom} - {vehicle.EngineCapacity.CapacityTo} CC";
+                                }
+                                @capacityText
+                            </dd>
                             <dt>@(currentLang == "ar" ? "رقم التسجيل:" : "Registration:")</dt>
                             <dd>@(vehicle.RegistrationNumber ?? "-")</dd>
                             <dt>@(currentLang == "ar" ? "رقم الشاسيه:" : "Chassis:")</dt>

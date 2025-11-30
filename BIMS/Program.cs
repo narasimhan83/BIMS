@@ -2,11 +2,20 @@ using BIMS.Data;
 using BIMS.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Configure global date/time culture (dd/MM/yyyy)
+var supportedCultures = new[]
+{
+    new CultureInfo("en-GB"), // English with dd/MM/yyyy
+    new CultureInfo("ar-SA")  // Arabic
+};
 
 // Configure File Upload
 builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(options =>
@@ -64,6 +73,15 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 var app = builder.Build();
+
+// Configure localization middleware so model binding and date formatting use dd/MM/yyyy
+var localizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en-GB"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+};
+app.UseRequestLocalization(localizationOptions);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

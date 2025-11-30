@@ -10,12 +10,19 @@
         <form asp-action="CreateEngineCapacity" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
             
-            <div class="form-group">
-                <label asp-for="Capacity" class="form-label"></label>
-                <input asp-for="Capacity" class="form-control" type="number" step="0.1" placeholder="Enter capacity (e.g., 1600, 2000, 2.5)" />
-                <span asp-validation-for="Capacity" class="text-danger"></span>
-                <small class="form-text">Enter in CC (e.g., 1600) or Liters (e.g., 2.5)</small>
+            <div class="bilingual-row">
+                <div class="bilingual-col">
+                    <label asp-for="CapacityFrom" class="form-label"></label>
+                    <input asp-for="CapacityFrom" class="form-control" type="number" step="0.1" placeholder="Enter capacity from (e.g., 1600)" />
+                    <span asp-validation-for="CapacityFrom" class="text-danger"></span>
+                </div>
+                <div class="bilingual-col">
+                    <label asp-for="CapacityTo" class="form-label"></label>
+                    <input asp-for="CapacityTo" class="form-control" type="number" step="0.1" placeholder="Enter capacity to (e.g., 2000)" />
+                    <span asp-validation-for="CapacityTo" class="text-danger"></span>
+                </div>
             </div>
+            <small class="form-text">Enter capacity range in CC (e.g., 1600 to 2000) or Liters (e.g., 1.6 to 2.0).</small>
 
             <div class="bilingual-row">
                 <div class="bilingual-col english">

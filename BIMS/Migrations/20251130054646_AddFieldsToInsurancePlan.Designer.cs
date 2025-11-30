@@ -4,6 +4,7 @@ using BIMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BIMS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251130054646_AddFieldsToInsurancePlan")]
+    partial class AddFieldsToInsurancePlan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -443,71 +446,6 @@ namespace BIMS.Migrations
                     b.ToTable("Cities");
                 });
 
-            modelBuilder.Entity("BIMS.Models.ComprehensiveTariff", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EffectiveFrom")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("EffectiveTo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Excess")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("InsurancePlanId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("MinimumPremium")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Percentage")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ValueBandId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VehicleCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VehicleTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InsurancePlanId");
-
-                    b.HasIndex("ValueBandId");
-
-                    b.HasIndex("VehicleCategoryId");
-
-                    b.HasIndex("VehicleTypeId");
-
-                    b.ToTable("ComprehensiveTariffs");
-                });
-
             modelBuilder.Entity("BIMS.Models.Country", b =>
                 {
                     b.Property<int>("Id")
@@ -856,7 +794,7 @@ namespace BIMS.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2025, 11, 30, 8, 34, 3, 629, DateTimeKind.Utc).AddTicks(2185),
+                            CreatedDate = new DateTime(2025, 11, 30, 5, 46, 45, 117, DateTimeKind.Utc).AddTicks(3325),
                             Description = "Individual customer type",
                             IsActive = true,
                             Name = "Individual"
@@ -864,7 +802,7 @@ namespace BIMS.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2025, 11, 30, 8, 34, 3, 629, DateTimeKind.Utc).AddTicks(2188),
+                            CreatedDate = new DateTime(2025, 11, 30, 5, 46, 45, 117, DateTimeKind.Utc).AddTicks(3329),
                             Description = "Company customer type",
                             IsActive = true,
                             Name = "Company"
@@ -872,7 +810,7 @@ namespace BIMS.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2025, 11, 30, 8, 34, 3, 629, DateTimeKind.Utc).AddTicks(2189),
+                            CreatedDate = new DateTime(2025, 11, 30, 5, 46, 45, 117, DateTimeKind.Utc).AddTicks(3330),
                             Description = "Group customer type",
                             IsActive = true,
                             Name = "Group"
@@ -2356,41 +2294,6 @@ namespace BIMS.Migrations
                         .IsRequired();
 
                     b.Navigation("State");
-                });
-
-            modelBuilder.Entity("BIMS.Models.ComprehensiveTariff", b =>
-                {
-                    b.HasOne("BIMS.Models.InsurancePlan", "InsurancePlan")
-                        .WithMany()
-                        .HasForeignKey("InsurancePlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BIMS.Models.ValueBand", "ValueBand")
-                        .WithMany()
-                        .HasForeignKey("ValueBandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BIMS.Models.VehicleCategory", "VehicleCategory")
-                        .WithMany()
-                        .HasForeignKey("VehicleCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BIMS.Models.VehicleType", "VehicleType")
-                        .WithMany()
-                        .HasForeignKey("VehicleTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("InsurancePlan");
-
-                    b.Navigation("ValueBand");
-
-                    b.Navigation("VehicleCategory");
-
-                    b.Navigation("VehicleType");
                 });
 
             modelBuilder.Entity("BIMS.Models.CreditNote", b =>

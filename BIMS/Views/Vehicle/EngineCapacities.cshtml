@@ -21,7 +21,8 @@
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>@(currentLang == "ar" ? "السعة (CC)" : "Capacity (CC)")</th>
+                    <th>@(currentLang == "ar" ? "السعة من (CC)" : "Capacity From (CC)")</th>
+                    <th>@(currentLang == "ar" ? "السعة إلى (CC)" : "Capacity To (CC)")</th>
                     <th>@(currentLang == "ar" ? "العرض" : "Display")</th>
                     <th>@(currentLang == "ar" ? "الوصف" : "Description")</th>
                     <th>@(currentLang == "ar" ? "الحالة" : "Status")</th>
@@ -33,8 +34,9 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td><strong>@item.Capacity CC</strong></td>
-                        <td>@(currentLang == "ar" && !string.IsNullOrEmpty(item.DisplayNameAr) ? item.DisplayNameAr : (item.DisplayName ?? $"{item.Capacity} CC"))</td>
+                        <td><strong>@item.CapacityFrom CC</strong></td>
+                        <td><strong>@item.CapacityTo CC</strong></td>
+                        <td>@(currentLang == "ar" && !string.IsNullOrEmpty(item.DisplayNameAr) ? item.DisplayNameAr : (item.DisplayName ?? $"{item.CapacityFrom} - {item.CapacityTo} CC"))</td>
                         <td>@(currentLang == "ar" && !string.IsNullOrEmpty(item.DescriptionAr) ? item.DescriptionAr : (item.Description ?? "-"))</td>
                         <td>
                             @if (item.IsActive) { <span class="badge badge-success">@(currentLang == "ar" ? "نشط" : "Active")</span> }

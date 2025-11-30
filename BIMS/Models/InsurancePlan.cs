@@ -24,6 +24,22 @@ namespace BIMS.Models
         [Display(Name = "اسم الخطة (عربي)")]
         public string? PlanNameAr { get; set; }
 
+        [StringLength(50)]
+        [Display(Name = "Plan Code")]
+        public string? PlanCode { get; set; }
+
+        [StringLength(100)]
+        [Display(Name = "Plan Tier")]
+        public string? PlanTier { get; set; }
+
+        [Display(Name = "Launch Date")]
+        [DataType(DataType.Date)]
+        public DateTime? LaunchDate { get; set; }
+
+        [Display(Name = "Withdraw Date")]
+        [DataType(DataType.Date)]
+        public DateTime? WithdrawDate { get; set; }
+
         [StringLength(500, ErrorMessage = "Description cannot exceed 500 characters")]
         [Display(Name = "Description")]
         public string? Description { get; set; }

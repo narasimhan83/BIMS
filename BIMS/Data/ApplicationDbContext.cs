@@ -41,6 +41,8 @@ namespace BIMS.Data
         public DbSet<VehicleYear> VehicleYears { get; set; }
         public DbSet<EngineCapacity> EngineCapacities { get; set; }
         public DbSet<VehicleType> VehicleTypes { get; set; }
+        public DbSet<VehicleCategory> VehicleCategories { get; set; }
+        public DbSet<ValueBand> ValueBands { get; set; }
 
         // Insurance Management DbSets
         public DbSet<InsuranceClient> InsuranceClients { get; set; }
@@ -49,6 +51,7 @@ namespace BIMS.Data
         public DbSet<LineOfBusiness> LinesOfBusiness { get; set; }
         public DbSet<ProductClass> ProductClasses { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
+        public DbSet<ComprehensiveTariff> ComprehensiveTariffs { get; set; }
 
         // CRM DbSets
         public DbSet<Lead> Leads { get; set; }

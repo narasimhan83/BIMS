@@ -1211,6 +1211,285 @@ namespace BIMS.Controllers
         }
 
         // ============================================
+        // VEHICLE CATEGORY CRUD OPERATIONS
+        // ============================================
+
+        // GET: Masters/VehicleCategories
+        public async Task<IActionResult> VehicleCategories()
+        {
+            var categories = await _context.VehicleCategories
+                .OrderByDescending(v => v.CreatedDate)
+                .ToListAsync();
+            return View(categories);
+        }
+
+        // GET: Masters/CreateVehicleCategory
+        public IActionResult CreateVehicleCategory()
+        {
+            return View();
+        }
+
+        // POST: Masters/CreateVehicleCategory
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateVehicleCategory([Bind("CategoryName,CategoryNameAr,Code,Description,DescriptionAr,IsActive")] VehicleCategory vehicleCategory)
+        {
+            if (ModelState.IsValid)
+            {
+                vehicleCategory.CreatedDate = DateTime.UtcNow;
+                vehicleCategory.CreatedBy = User.Identity?.Name;
+                _context.Add(vehicleCategory);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Vehicle Category created successfully!";
+                return RedirectToAction(nameof(VehicleCategories));
+            }
+            return View(vehicleCategory);
+        }
+
+        // GET: Masters/EditVehicleCategory/5
+        public async Task<IActionResult> EditVehicleCategory(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var vehicleCategory = await _context.VehicleCategories.FindAsync(id);
+            if (vehicleCategory == null)
+            {
+                return NotFound();
+            }
+            return View(vehicleCategory);
+        }
+
+        // POST: Masters/EditVehicleCategory/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditVehicleCategory(int id, [Bind("Id,CategoryName,CategoryNameAr,Code,Description,DescriptionAr,IsActive,CreatedDate,CreatedBy")] VehicleCategory vehicleCategory)
+        {
+            if (id != vehicleCategory.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    vehicleCategory.ModifiedDate = DateTime.UtcNow;
+                    vehicleCategory.ModifiedBy = User.Identity?.Name;
+                    _context.Update(vehicleCategory);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Vehicle Category updated successfully!";
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!VehicleCategoryExists(vehicleCategory.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(VehicleCategories));
+            }
+            return View(vehicleCategory);
+        }
+
+        // GET: Masters/DeleteVehicleCategory/5
+        public async Task<IActionResult> DeleteVehicleCategory(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var vehicleCategory = await _context.VehicleCategories
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (vehicleCategory == null)
+            {
+                return NotFound();
+            }
+
+            return View(vehicleCategory);
+        }
+
+        // POST: Masters/DeleteVehicleCategoryConfirmed/5
+        [HttpPost, ActionName("DeleteVehicleCategory")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteVehicleCategoryConfirmed(int id)
+        {
+            var vehicleCategory = await _context.VehicleCategories.FindAsync(id);
+            if (vehicleCategory != null)
+            {
+                _context.VehicleCategories.Remove(vehicleCategory);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Vehicle Category deleted successfully!";
+            }
+            return RedirectToAction(nameof(VehicleCategories));
+        }
+
+        private bool VehicleCategoryExists(int id)
+        {
+            return _context.VehicleCategories.Any(e => e.Id == id);
+        }
+
+        // ============================================
+        // VALUE BAND CRUD OPERATIONS
+        // ============================================
+
+        // GET: Masters/ValueBands
+        public async Task<IActionResult> ValueBands()
+        {
+            var valueBands = await _context.ValueBands
+                .OrderByDescending(v => v.CreatedDate)
+                .ToListAsync();
+            return View(valueBands);
+        }
+
+        // GET: Masters/CreateValueBand
+        public IActionResult CreateValueBand()
+        {
+            return View();
+        }
+
+        // POST: Masters/CreateValueBand
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateValueBand([Bind("ValueFrom,ValueTo,DisplayName,DisplayNameAr,Description,DescriptionAr,IsActive")] ValueBand valueBand)
+        {
+            if (valueBand.ValueTo < valueBand.ValueFrom)
+            {
+                ModelState.AddModelError(nameof(ValueBand.ValueTo), "Value To must be greater than or equal to Value From.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrEmpty(valueBand.DisplayName))
+                    valueBand.DisplayName = $"{valueBand.ValueFrom:N0} - {valueBand.ValueTo:N0}";
+
+                if (string.IsNullOrEmpty(valueBand.DisplayNameAr))
+                    valueBand.DisplayNameAr = $"{valueBand.ValueFrom:N0} - {valueBand.ValueTo:N0}";
+
+                valueBand.CreatedDate = DateTime.UtcNow;
+                valueBand.CreatedBy = User.Identity?.Name;
+                _context.Add(valueBand);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Value Band created successfully!";
+                return RedirectToAction(nameof(ValueBands));
+            }
+
+            return View(valueBand);
+        }
+
+        // GET: Masters/EditValueBand/5
+        public async Task<IActionResult> EditValueBand(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var valueBand = await _context.ValueBands.FindAsync(id);
+            if (valueBand == null)
+            {
+                return NotFound();
+            }
+
+            return View(valueBand);
+        }
+
+        // POST: Masters/EditValueBand/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditValueBand(int id, [Bind("Id,ValueFrom,ValueTo,DisplayName,DisplayNameAr,Description,DescriptionAr,IsActive,CreatedDate,CreatedBy")] ValueBand valueBand)
+        {
+            if (id != valueBand.Id)
+            {
+                return NotFound();
+            }
+
+            if (valueBand.ValueTo < valueBand.ValueFrom)
+            {
+                ModelState.AddModelError(nameof(ValueBand.ValueTo), "Value To must be greater than or equal to Value From.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(valueBand.DisplayName))
+                        valueBand.DisplayName = $"{valueBand.ValueFrom:N0} - {valueBand.ValueTo:N0}";
+
+                    if (string.IsNullOrEmpty(valueBand.DisplayNameAr))
+                        valueBand.DisplayNameAr = $"{valueBand.ValueFrom:N0} - {valueBand.ValueTo:N0}";
+
+                    valueBand.ModifiedDate = DateTime.UtcNow;
+                    valueBand.ModifiedBy = User.Identity?.Name;
+                    _context.Update(valueBand);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Value Band updated successfully!";
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ValueBandExists(valueBand.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return RedirectToAction(nameof(ValueBands));
+            }
+
+            return View(valueBand);
+        }
+
+        // GET: Masters/DeleteValueBand/5
+        public async Task<IActionResult> DeleteValueBand(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var valueBand = await _context.ValueBands
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (valueBand == null)
+            {
+                return NotFound();
+            }
+
+            return View(valueBand);
+        }
+
+        // POST: Masters/DeleteValueBandConfirmed/5
+        [HttpPost, ActionName("DeleteValueBand")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteValueBandConfirmed(int id)
+        {
+            var valueBand = await _context.ValueBands.FindAsync(id);
+            if (valueBand != null)
+            {
+                _context.ValueBands.Remove(valueBand);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Value Band deleted successfully!";
+            }
+
+            return RedirectToAction(nameof(ValueBands));
+        }
+
+        private bool ValueBandExists(int id)
+        {
+            return _context.ValueBands.Any(e => e.Id == id);
+        }
+
+        // ============================================
         // LEAD SOURCE CRUD OPERATIONS
         // ============================================
 

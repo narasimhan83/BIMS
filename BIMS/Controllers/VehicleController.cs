@@ -409,16 +409,22 @@ namespace BIMS.Controllers
         // POST: Vehicle/CreateEngineCapacity
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateEngineCapacity([Bind("Capacity,DisplayName,DisplayNameAr,Description,DescriptionAr,IsActive")] EngineCapacity engineCapacity)
+        public async Task<IActionResult> CreateEngineCapacity([Bind("CapacityFrom,CapacityTo,DisplayName,DisplayNameAr,Description,DescriptionAr,IsActive")] EngineCapacity engineCapacity)
         {
             if (ModelState.IsValid)
             {
+                if (engineCapacity.CapacityTo < engineCapacity.CapacityFrom)
+                {
+                    ModelState.AddModelError(nameof(engineCapacity.CapacityTo), "Capacity To must be greater than or equal to Capacity From.");
+                    return View(engineCapacity);
+                }
+
                 // Auto-generate display names if not provided
                 if (string.IsNullOrEmpty(engineCapacity.DisplayName))
-                    engineCapacity.DisplayName = $"{engineCapacity.Capacity} CC";
+                    engineCapacity.DisplayName = $"{engineCapacity.CapacityFrom} - {engineCapacity.CapacityTo} CC";
                 
                 if (string.IsNullOrEmpty(engineCapacity.DisplayNameAr))
-                    engineCapacity.DisplayNameAr = $"{engineCapacity.Capacity} سي سي";
+                    engineCapacity.DisplayNameAr = $"{engineCapacity.CapacityFrom} - {engineCapacity.CapacityTo} سي سي";
 
                 engineCapacity.CreatedDate = DateTime.UtcNow;
                 _context.Add(engineCapacity);
@@ -443,14 +449,27 @@ namespace BIMS.Controllers
         // POST: Vehicle/EditEngineCapacity/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditEngineCapacity(int id, [Bind("Id,Capacity,DisplayName,DisplayNameAr,Description,DescriptionAr,IsActive,CreatedDate")] EngineCapacity engineCapacity)
+        public async Task<IActionResult> EditEngineCapacity(int id, [Bind("Id,CapacityFrom,CapacityTo,DisplayName,DisplayNameAr,Description,DescriptionAr,IsActive,CreatedDate")] EngineCapacity engineCapacity)
         {
             if (id != engineCapacity.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
+                if (engineCapacity.CapacityTo < engineCapacity.CapacityFrom)
+                {
+                    ModelState.AddModelError(nameof(engineCapacity.CapacityTo), "Capacity To must be greater than or equal to Capacity From.");
+                    return View(engineCapacity);
+                }
+
                 try
                 {
+                    // Ensure display names always reflect the current range if left empty
+                    if (string.IsNullOrEmpty(engineCapacity.DisplayName))
+                        engineCapacity.DisplayName = $"{engineCapacity.CapacityFrom} - {engineCapacity.CapacityTo} CC";
+
+                    if (string.IsNullOrEmpty(engineCapacity.DisplayNameAr))
+                        engineCapacity.DisplayNameAr = $"{engineCapacity.CapacityFrom} - {engineCapacity.CapacityTo} سي سي";
+
                     engineCapacity.ModifiedDate = DateTime.UtcNow;
                     _context.Update(engineCapacity);
                     await _context.SaveChangesAsync();

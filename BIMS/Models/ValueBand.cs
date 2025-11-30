@@ -2,31 +2,31 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BIMS.Models
 {
-    public class EngineCapacity
+    public class ValueBand
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Capacity From is required")]
-        [Display(Name = "Capacity From (CC/Liters)")]
-        public decimal CapacityFrom { get; set; }
+        [Required(ErrorMessage = "Value From is required")]
+        [Display(Name = "Value From")]
+        public decimal ValueFrom { get; set; }
 
-        [Required(ErrorMessage = "Capacity To is required")]
-        [Display(Name = "Capacity To (CC/Liters)")]
-        public decimal CapacityTo { get; set; }
+        [Required(ErrorMessage = "Value To is required")]
+        [Display(Name = "Value To")]
+        public decimal ValueTo { get; set; }
 
-        [StringLength(50, ErrorMessage = "Display name cannot exceed 50 characters")]
+        [StringLength(100)]
         [Display(Name = "Display Name (English)")]
         public string? DisplayName { get; set; }
 
-        [StringLength(50, ErrorMessage = "Arabic display name cannot exceed 50 characters")]
+        [StringLength(100)]
         [Display(Name = "الاسم المعروض (عربي)")]
         public string? DisplayNameAr { get; set; }
 
-        [StringLength(500, ErrorMessage = "Description cannot exceed 500 characters")]
+        [StringLength(500)]
         [Display(Name = "Description (English)")]
         public string? Description { get; set; }
 
-        [StringLength(500, ErrorMessage = "Arabic description cannot exceed 500 characters")]
+        [StringLength(500)]
         [Display(Name = "الوصف (عربي)")]
         public string? DescriptionAr { get; set; }
 
@@ -38,5 +38,13 @@ namespace BIMS.Models
 
         [Display(Name = "Modified Date")]
         public DateTime? ModifiedDate { get; set; }
+
+        [StringLength(50)]
+        [Display(Name = "Created By")]
+        public string? CreatedBy { get; set; }
+
+        [StringLength(50)]
+        [Display(Name = "Modified By")]
+        public string? ModifiedBy { get; set; }
     }
 }

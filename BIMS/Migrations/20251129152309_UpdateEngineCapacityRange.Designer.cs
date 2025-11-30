@@ -4,6 +4,7 @@ using BIMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BIMS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251129152309_UpdateEngineCapacityRange")]
+    partial class UpdateEngineCapacityRange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -443,71 +446,6 @@ namespace BIMS.Migrations
                     b.ToTable("Cities");
                 });
 
-            modelBuilder.Entity("BIMS.Models.ComprehensiveTariff", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EffectiveFrom")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("EffectiveTo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Excess")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("InsurancePlanId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("MinimumPremium")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Percentage")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ValueBandId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VehicleCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VehicleTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InsurancePlanId");
-
-                    b.HasIndex("ValueBandId");
-
-                    b.HasIndex("VehicleCategoryId");
-
-                    b.HasIndex("VehicleTypeId");
-
-                    b.ToTable("ComprehensiveTariffs");
-                });
-
             modelBuilder.Entity("BIMS.Models.Country", b =>
                 {
                     b.Property<int>("Id")
@@ -856,7 +794,7 @@ namespace BIMS.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2025, 11, 30, 8, 34, 3, 629, DateTimeKind.Utc).AddTicks(2185),
+                            CreatedDate = new DateTime(2025, 11, 29, 15, 23, 7, 855, DateTimeKind.Utc).AddTicks(2587),
                             Description = "Individual customer type",
                             IsActive = true,
                             Name = "Individual"
@@ -864,7 +802,7 @@ namespace BIMS.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2025, 11, 30, 8, 34, 3, 629, DateTimeKind.Utc).AddTicks(2188),
+                            CreatedDate = new DateTime(2025, 11, 29, 15, 23, 7, 855, DateTimeKind.Utc).AddTicks(2590),
                             Description = "Company customer type",
                             IsActive = true,
                             Name = "Company"
@@ -872,7 +810,7 @@ namespace BIMS.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2025, 11, 30, 8, 34, 3, 629, DateTimeKind.Utc).AddTicks(2189),
+                            CreatedDate = new DateTime(2025, 11, 29, 15, 23, 7, 855, DateTimeKind.Utc).AddTicks(2592),
                             Description = "Group customer type",
                             IsActive = true,
                             Name = "Group"
@@ -1222,18 +1160,11 @@ namespace BIMS.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("LaunchDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("LineOfBusinessId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PlanCode")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PlanName")
                         .IsRequired()
@@ -1243,13 +1174,6 @@ namespace BIMS.Migrations
                     b.Property<string>("PlanNameAr")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("PlanTier")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime?>("WithdrawDate")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -1866,109 +1790,6 @@ namespace BIMS.Migrations
                     b.ToTable("States");
                 });
 
-            modelBuilder.Entity("BIMS.Models.ValueBand", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("DescriptionAr")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("DisplayName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("DisplayNameAr")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("ValueFrom")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ValueTo")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ValueBands");
-                });
-
-            modelBuilder.Entity("BIMS.Models.VehicleCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("CategoryNameAr")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Code")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("DescriptionAr")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("VehicleCategories");
-                });
-
             modelBuilder.Entity("BIMS.Models.VehicleMake", b =>
                 {
                     b.Property<int>("Id")
@@ -2356,41 +2177,6 @@ namespace BIMS.Migrations
                         .IsRequired();
 
                     b.Navigation("State");
-                });
-
-            modelBuilder.Entity("BIMS.Models.ComprehensiveTariff", b =>
-                {
-                    b.HasOne("BIMS.Models.InsurancePlan", "InsurancePlan")
-                        .WithMany()
-                        .HasForeignKey("InsurancePlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BIMS.Models.ValueBand", "ValueBand")
-                        .WithMany()
-                        .HasForeignKey("ValueBandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BIMS.Models.VehicleCategory", "VehicleCategory")
-                        .WithMany()
-                        .HasForeignKey("VehicleCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BIMS.Models.VehicleType", "VehicleType")
-                        .WithMany()
-                        .HasForeignKey("VehicleTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("InsurancePlan");
-
-                    b.Navigation("ValueBand");
-
-                    b.Navigation("VehicleCategory");
-
-                    b.Navigation("VehicleType");
                 });
 
             modelBuilder.Entity("BIMS.Models.CreditNote", b =>

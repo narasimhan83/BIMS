@@ -12,11 +12,19 @@
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="CreatedDate" />
             
-            <div class="form-group">
-                <label asp-for="Capacity" class="form-label"></label>
-                <input asp-for="Capacity" class="form-control" type="number" step="0.1" />
-                <span asp-validation-for="Capacity" class="text-danger"></span>
+            <div class="bilingual-row">
+                <div class="bilingual-col">
+                    <label asp-for="CapacityFrom" class="form-label"></label>
+                    <input asp-for="CapacityFrom" class="form-control" type="number" step="0.1" />
+                    <span asp-validation-for="CapacityFrom" class="text-danger"></span>
+                </div>
+                <div class="bilingual-col">
+                    <label asp-for="CapacityTo" class="form-label"></label>
+                    <input asp-for="CapacityTo" class="form-control" type="number" step="0.1" />
+                    <span asp-validation-for="CapacityTo" class="text-danger"></span>
+                </div>
             </div>
+            <span class="form-text">Enter capacity range in CC or Liters.</span>
 
             <div class="bilingual-row">
                 <div class="bilingual-col english">

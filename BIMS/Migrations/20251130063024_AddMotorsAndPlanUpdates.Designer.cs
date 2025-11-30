@@ -4,6 +4,7 @@ using BIMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BIMS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251130063024_AddMotorsAndPlanUpdates")]
+    partial class AddMotorsAndPlanUpdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -856,7 +859,7 @@ namespace BIMS.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2025, 11, 30, 8, 34, 3, 629, DateTimeKind.Utc).AddTicks(2185),
+                            CreatedDate = new DateTime(2025, 11, 30, 6, 30, 22, 581, DateTimeKind.Utc).AddTicks(1273),
                             Description = "Individual customer type",
                             IsActive = true,
                             Name = "Individual"
@@ -864,7 +867,7 @@ namespace BIMS.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2025, 11, 30, 8, 34, 3, 629, DateTimeKind.Utc).AddTicks(2188),
+                            CreatedDate = new DateTime(2025, 11, 30, 6, 30, 22, 581, DateTimeKind.Utc).AddTicks(1275),
                             Description = "Company customer type",
                             IsActive = true,
                             Name = "Company"
@@ -872,7 +875,7 @@ namespace BIMS.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2025, 11, 30, 8, 34, 3, 629, DateTimeKind.Utc).AddTicks(2189),
+                            CreatedDate = new DateTime(2025, 11, 30, 6, 30, 22, 581, DateTimeKind.Utc).AddTicks(1277),
                             Description = "Group customer type",
                             IsActive = true,
                             Name = "Group"

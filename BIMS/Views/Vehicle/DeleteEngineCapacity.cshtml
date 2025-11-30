@@ -14,11 +14,28 @@
         </div>
         <div class="details-section">
             <dl class="details-list">
-                <dt>Capacity:</dt><dd><strong>@Model.Capacity CC</strong></dd>
-                <dt>Display Name (English):</dt><dd>@(Model.DisplayName ?? $"{Model.Capacity} CC")</dd>
-                @if (!string.IsNullOrEmpty(Model.DisplayNameAr)) { <dt>الاسم المعروض (عربي):</dt><dd>@Model.DisplayNameAr</dd> }
-                <dt>Status:</dt><dd>@if (Model.IsActive) { <span class="badge badge-success">Active</span> } else { <span class="badge badge-danger">Inactive</span> }</dd>
-                <dt>Created Date:</dt><dd>@Model.CreatedDate.ToLocalTime().ToString("dd MMMM yyyy, HH:mm")</dd>
+                <dt>Capacity Range:</dt>
+                <dd><strong>@Model.CapacityFrom - @Model.CapacityTo CC</strong></dd>
+                <dt>Display Name (English):</dt>
+                <dd>@(Model.DisplayName ?? $"{Model.CapacityFrom} - {Model.CapacityTo} CC")</dd>
+                @if (!string.IsNullOrEmpty(Model.DisplayNameAr))
+                {
+                    <dt>الاسم المعروض (عربي):</dt>
+                    <dd>@Model.DisplayNameAr</dd>
+                }
+                <dt>Status:</dt>
+                <dd>
+                    @if (Model.IsActive)
+                    {
+                        <span class="badge badge-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger">Inactive</span>
+                    }
+                </dd>
+                <dt>Created Date:</dt>
+                <dd>@Model.CreatedDate.ToLocalTime().ToString("dd MMMM yyyy, HH:mm")</dd>
             </dl>
         </div>
         <form asp-action="DeleteEngineCapacity" method="post">

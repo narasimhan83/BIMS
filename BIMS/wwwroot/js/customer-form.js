@@ -19,24 +19,12 @@ function initializeCustomerForm() {
 // ============================================
 
 function toggleGroupDropdown() {
-    const customerTypeDropdown = document.getElementById('CustomerTypeId');
+    // Always show the group dropdown; group selection is optional.
     const groupSection = document.getElementById('groupSection');
-    const groupDropdown = document.getElementById('CustomerGroupId');
-    
-    if (!customerTypeDropdown || !groupSection) return;
-    
-    const selectedText = customerTypeDropdown.options[customerTypeDropdown.selectedIndex]?.text || '';
-    
-    // Show group dropdown if "Group" or "مجموعة" is selected
-    if (selectedText.toLowerCase().includes('group') || selectedText.includes('مجموعة')) {
-        groupSection.style.display = 'block';
-        groupSection.classList.add('slide-in');
-    } else {
-        groupSection.style.display = 'none';
-        if (groupDropdown) {
-            groupDropdown.value = '';
-        }
-    }
+    if (!groupSection) return;
+
+    groupSection.style.display = 'block';
+    groupSection.classList.add('slide-in');
 }
 
 // ============================================

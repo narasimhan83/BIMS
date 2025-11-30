@@ -61,7 +61,7 @@ namespace BIMS.Controllers
         // POST: InsurancePlans/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("InsuranceClientId,LineOfBusinessId,PlanName,PlanNameAr,Description,DescriptionAr,IsActive")] InsurancePlan insurancePlan)
+        public async Task<IActionResult> Create([Bind("InsuranceClientId,LineOfBusinessId,PlanName,PlanNameAr,PlanCode,PlanTier,LaunchDate,WithdrawDate,Description,DescriptionAr,IsActive")] InsurancePlan insurancePlan)
         {
             // Ensure selected Line of Business belongs to the chosen Insurance Client
             if (insurancePlan.InsuranceClientId == 0)
@@ -114,7 +114,7 @@ namespace BIMS.Controllers
         // POST: InsurancePlans/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,InsuranceClientId,LineOfBusinessId,PlanName,PlanNameAr,Description,DescriptionAr,IsActive,CreatedDate")] InsurancePlan insurancePlan)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,InsuranceClientId,LineOfBusinessId,PlanName,PlanNameAr,PlanCode,PlanTier,LaunchDate,WithdrawDate,Description,DescriptionAr,IsActive,CreatedDate")] InsurancePlan insurancePlan)
         {
             if (id != insurancePlan.Id)
             {

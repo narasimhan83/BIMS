@@ -90,6 +90,30 @@
                     </div>
 
                     <div class="form-group">
+                        <label asp-for="PlanCode" class="form-label"></label>
+                        <input asp-for="PlanCode" class="form-control" placeholder="@(currentLang == "ar" ? "أدخل كود الخطة" : "Enter plan code")" />
+                        <span asp-validation-for="PlanCode" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PlanTier" class="form-label"></label>
+                        <input asp-for="PlanTier" class="form-control" placeholder="@(currentLang == "ar" ? "أدخل مستوى الخطة" : "Enter plan tier (e.g., Gold, Silver)")" />
+                        <span asp-validation-for="PlanTier" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="LaunchDate" class="form-label"></label>
+                        <input asp-for="LaunchDate" class="form-control" type="date" />
+                        <span asp-validation-for="LaunchDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="WithdrawDate" class="form-label"></label>
+                        <input asp-for="WithdrawDate" class="form-control" type="date" />
+                        <span asp-validation-for="WithdrawDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
                         <div class="checkbox-group">
                             <input asp-for="IsActive" class="form-check-input" type="checkbox" checked />
                             <label asp-for="IsActive" class="form-check-label">

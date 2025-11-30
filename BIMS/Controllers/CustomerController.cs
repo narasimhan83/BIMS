@@ -569,7 +569,8 @@ namespace BIMS.Controllers
                 {
                     c.Id,
                     DisplayName = currentLang == "ar" && !string.IsNullOrEmpty(c.DisplayNameAr)
-                        ? c.DisplayNameAr : (c.DisplayName ?? $"{c.Capacity} CC")
+                        ? c.DisplayNameAr
+                        : (c.DisplayName ?? $"{c.CapacityFrom} - {c.CapacityTo} CC")
                 })
                 .ToList();
             ViewBag.EngineCapacities = capacities;
@@ -913,10 +914,21 @@ namespace BIMS.Controllers
                             if (!string.IsNullOrEmpty(capacityValue))
                             {
                                 var capacityLowerTrim = capacityValue.ToLower().Trim();
+
+                                // Try to interpret a numeric capacity (e.g., "1600", "1600cc", "2.5L")
+                                var numericText = capacityLowerTrim
+                                    .Replace("cc", string.Empty)
+                                    .Replace("l", string.Empty)
+                                    .Trim();
+
+                                bool hasNumeric = decimal.TryParse(numericText, out decimal numericCapacity);
+
                                 capacity = capacities.FirstOrDefault(c =>
-                                    c.Capacity.ToString() == capacityValue ||
-                                    (c.DisplayName != null && c.DisplayName.ToLower().Contains(capacityLowerTrim)) ||
-                                    (c.DisplayNameAr != null && c.DisplayNameAr.ToLower().Contains(capacityLowerTrim)));
+                                    // Match by numeric value falling within the defined range
+                                    (hasNumeric && numericCapacity >= c.CapacityFrom && numericCapacity <= c.CapacityTo) ||
+                                    // Or by English / Arabic display names containing the text
+                                    (!string.IsNullOrEmpty(c.DisplayName) && c.DisplayName.ToLower().Contains(capacityLowerTrim)) ||
+                                    (!string.IsNullOrEmpty(c.DisplayNameAr) && c.DisplayNameAr.ToLower().Contains(capacityLowerTrim)));
                             }
 
                             // Validate Registration Number uniqueness
