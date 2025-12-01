@@ -52,6 +52,7 @@ namespace BIMS.Data
         public DbSet<LineOfBusiness> LinesOfBusiness { get; set; }
         public DbSet<ProductClass> ProductClasses { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
+        public DbSet<PlanExcess> PlanExcesses { get; set; }
         public DbSet<ComprehensiveTariff> ComprehensiveTariffs { get; set; }
         public DbSet<ThirdPartyTariff> ThirdPartyTariffs { get; set; }
         public DbSet<CommercialTariff> CommercialTariffs { get; set; }
@@ -276,14 +277,33 @@ namespace BIMS.Data
                 .WithMany(ic => ic.InsurancePlans)
                 .HasForeignKey(ip => ip.InsuranceClientId)
                 .OnDelete(DeleteBehavior.Restrict);
-
+ 
             // InsurancePlan -> LineOfBusiness (FK)
             builder.Entity<InsurancePlan>()
                 .HasOne(ip => ip.LineOfBusiness)
                 .WithMany()
                 .HasForeignKey(ip => ip.LineOfBusinessId)
                 .OnDelete(DeleteBehavior.Restrict);
-
+ 
+            // Configure PlanExcess relationships
+            builder.Entity<PlanExcess>()
+                .HasOne(pe => pe.InsurancePlan)
+                .WithMany()
+                .HasForeignKey(pe => pe.InsurancePlanId)
+                .OnDelete(DeleteBehavior.Restrict);
+ 
+            builder.Entity<PlanExcess>()
+                .HasOne(pe => pe.ExcessType)
+                .WithMany()
+                .HasForeignKey(pe => pe.ExcessTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+ 
+            builder.Entity<PlanExcess>()
+                .HasOne(pe => pe.ValueBand)
+                .WithMany()
+                .HasForeignKey(pe => pe.ValueBandId)
+                .OnDelete(DeleteBehavior.Restrict);
+ 
             // Configure LineOfBusiness relationships
             builder.Entity<LineOfBusiness>()
                 .HasOne(lob => lob.InsuranceClient)
