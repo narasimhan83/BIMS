@@ -52,6 +52,7 @@ namespace BIMS.Data
         public DbSet<ProductClass> ProductClasses { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<ComprehensiveTariff> ComprehensiveTariffs { get; set; }
+        public DbSet<ThirdPartyTariff> ThirdPartyTariffs { get; set; }
 
         // CRM DbSets
         public DbSet<Lead> Leads { get; set; }
