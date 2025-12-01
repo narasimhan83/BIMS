@@ -1,0 +1,317 @@
+@model BIMS.Models.CommercialTariff
+@{
+    ViewData["Title"] = "Edit Commercial Tariff";
+    var currentLang = Context.Session.GetString("Language") ?? "en";
+}
+
+<div class="form-container">
+    <div class="form-header">
+        <h1>
+            <i class="icon">✏️</i>
+            @(currentLang == "ar" ? "تعديل تعرفة تجارية" : "Edit Commercial Tariff")
+        </h1>
+        <a asp-action="Index" class="btn-back">
+            <span>←</span> @(currentLang == "ar" ? "العودة إلى التعرفات" : "Back to Tariffs")
+        </a>
+    </div>
+
+    <div class="form-card">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label asp-for="InsurancePlanId" class="form-label">
+                        @if (currentLang == "ar")
+                        {
+                            <span>خطة التأمين <span class="required">*</span></span>
+                        }
+                        else
+                        {
+                            <span>Insurance Plan <span class="required">*</span></span>
+                        }
+                    </label>
+                    <select asp-for="InsurancePlanId" class="form-control" asp-items="ViewBag.InsurancePlans">
+                        <option value="">@(currentLang == "ar" ? "اختر خطة التأمين" : "Select insurance plan")</option>
+                    </select>
+                    <span asp-validation-for="InsurancePlanId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="VehicleCategoryId" class="form-label">
+                        @if (currentLang == "ar")
+                        {
+                            <span>فئة المركبة <span class="required">*</span></span>
+                        }
+                        else
+                        {
+                            <span>Vehicle Category <span class="required">*</span></span>
+                        }
+                    </label>
+                    <select asp-for="VehicleCategoryId" class="form-control" asp-items="ViewBag.VehicleCategories">
+                        <option value="">@(currentLang == "ar" ? "اختر فئة المركبة" : "Select vehicle category")</option>
+                    </select>
+                    <span asp-validation-for="VehicleCategoryId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="VehicleTypeId" class="form-label">
+                        @if (currentLang == "ar")
+                        {
+                            <span>نوع المركبة <span class="required">*</span></span>
+                        }
+                        else
+                        {
+                            <span>Vehicle Type <span class="required">*</span></span>
+                        }
+                    </label>
+                    <select asp-for="VehicleTypeId" class="form-control" asp-items="ViewBag.VehicleTypes">
+                        <option value="">@(currentLang == "ar" ? "اختر نوع المركبة" : "Select vehicle type")</option>
+                    </select>
+                    <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Percentage" class="form-label"></label>
+                    <input asp-for="Percentage" class="form-control" type="number" step="0.01" />
+                    <span asp-validation-for="Percentage" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="MinimumPremium" class="form-label"></label>
+                    <input asp-for="MinimumPremium" class="form-control" type="number" step="0.01" />
+                    <span asp-validation-for="MinimumPremium" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="EffectiveFrom" class="form-label"></label>
+                    <input asp-for="EffectiveFrom" class="form-control" type="date" />
+                    <span asp-validation-for="EffectiveFrom" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="EffectiveTo" class="form-label"></label>
+                    <input asp-for="EffectiveTo" class="form-control" type="date" />
+                    <span asp-validation-for="EffectiveTo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input asp-for="IsActive" type="checkbox" />
+                        <span>@(currentLang == "ar" ? "نشط" : "Active")</span>
+                    </label>
+                    <span asp-validation-for="IsActive" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        @(currentLang == "ar" ? "تاريخ الإنشاء" : "Created Date")
+                    </label>
+                    <input class="form-control" value="@(Model.CreatedDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm"))" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        @(currentLang == "ar" ? "تم الإنشاء بواسطة" : "Created By")
+                    </label>
+                    <input class="form-control" value="@Model.CreatedBy" readonly />
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    <span>💾</span> @(currentLang == "ar" ? "تحديث التعرفة" : "Update Tariff")
+                </button>
+                <a asp-action="Index" class="btn-cancel">
+                    <span>✖</span> @(currentLang == "ar" ? "إلغاء" : "Cancel")
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    .form-container {
+        padding: 20px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .form-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .form-header h1 {
+        font-size: 28px;
+        color: var(--navy-dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-back {
+        padding: 10px 20px;
+        background: #6c757d;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        background: #5a6268;
+        transform: translateX(-3px);
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--navy-dark);
+        font-size: 14px;
+    }
+
+    .required {
+        color: #dc3545;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary-teal);
+        box-shadow: 0 0 0 3px rgba(0, 166, 166, 0.1);
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        background: #f8f9fa;
+        padding: 12px 15px;
+        border-radius: 8px;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary-teal);
+    }
+
+    .form-actions {
+        margin-top: 25px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+    }
+
+    .btn-submit,
+    .btn-cancel {
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, var(--primary-teal), var(--teal-dark));
+        color: white;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 166, 166, 0.3);
+    }
+
+    .btn-cancel {
+        background: #6c757d;
+        color: white;
+    }
+
+    .btn-cancel:hover {
+        background: #5a6268;
+        transform: translateY(-1px);
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .validation-summary {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    @@media (max-width: 768px) {
+        .form-card {
+            padding: 20px;
+        }
+
+        .form-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .form-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+</style>
