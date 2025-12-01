@@ -963,6 +963,125 @@ namespace BIMS.Controllers
         }
 
         // ============================================
+        // EXCESS TYPE CRUD OPERATIONS
+        // ============================================
+
+        // GET: Masters/ExcessTypes
+        public async Task<IActionResult> ExcessTypes()
+        {
+            var excessTypes = await _context.ExcessTypes
+                .OrderByDescending(e => e.CreatedDate)
+                .ToListAsync();
+            return View(excessTypes);
+        }
+
+        // GET: Masters/CreateExcessType
+        public IActionResult CreateExcessType()
+        {
+            return View();
+        }
+
+        // POST: Masters/CreateExcessType
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateExcessType([Bind("Name,Code,Description,IsActive")] ExcessType excessType)
+        {
+            if (ModelState.IsValid)
+            {
+                excessType.CreatedDate = DateTime.UtcNow;
+                _context.Add(excessType);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Excess Type created successfully!";
+                return RedirectToAction(nameof(ExcessTypes));
+            }
+            return View(excessType);
+        }
+
+        // GET: Masters/EditExcessType/5
+        public async Task<IActionResult> EditExcessType(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var excessType = await _context.ExcessTypes.FindAsync(id);
+            if (excessType == null)
+            {
+                return NotFound();
+            }
+            return View(excessType);
+        }
+
+        // POST: Masters/EditExcessType/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditExcessType(int id, [Bind("Id,Name,Code,Description,IsActive,CreatedDate")] ExcessType excessType)
+        {
+            if (id != excessType.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    excessType.ModifiedDate = DateTime.UtcNow;
+                    _context.Update(excessType);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Excess Type updated successfully!";
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.ExcessTypes.Any(e => e.Id == excessType.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(ExcessTypes));
+            }
+            return View(excessType);
+        }
+
+        // GET: Masters/DeleteExcessType/5
+        public async Task<IActionResult> DeleteExcessType(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var excessType = await _context.ExcessTypes
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (excessType == null)
+            {
+                return NotFound();
+            }
+
+            return View(excessType);
+        }
+
+        // POST: Masters/DeleteExcessTypeConfirmed/5
+        [HttpPost, ActionName("DeleteExcessType")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteExcessTypeConfirmed(int id)
+        {
+            var excessType = await _context.ExcessTypes.FindAsync(id);
+            if (excessType != null)
+            {
+                _context.ExcessTypes.Remove(excessType);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Excess Type deleted successfully!";
+            }
+            return RedirectToAction(nameof(ExcessTypes));
+        }
+        
+        // ============================================
         // SALES TYPE CRUD OPERATIONS
         // ============================================
 

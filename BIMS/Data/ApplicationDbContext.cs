@@ -16,6 +16,7 @@ namespace BIMS.Data
         public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<BusinessType> BusinessTypes { get; set; }
         public DbSet<Bank> Banks { get; set; }
+        public DbSet<ExcessType> ExcessTypes { get; set; }
 
         // Calculation Management DbSets
         public DbSet<CalculationMethod> CalculationMethods { get; set; }

@@ -55,6 +55,9 @@
                                 <a asp-controller="Masters" asp-action="CalculationMethods" class="dropdown-item">
                                     <span>🧮</span> @(currentLang == "ar" ? "طرق الحساب" : "Calculation Methods")
                                 </a>
+                                <a asp-controller="Masters" asp-action="ExcessTypes" class="dropdown-item">
+                                    <span>🧾</span> @(currentLang == "ar" ? "أنواع التحمل" : "Excess Types")
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <div class="dropdown-submenu-header">@(currentLang == "ar" ? "📍 إدارة المواقع" : "📍 Location Management")</div>
                                 <a asp-controller="Masters" asp-action="Countries" class="dropdown-item dropdown-subitem">
