@@ -43,7 +43,7 @@ namespace BIMS.Models
 
         [Display(Name = "Company (Arabic)")]
         [StringLength(100, ErrorMessage = "Company name cannot exceed 100 characters")]
-        public string CompanyAr { get; set; }
+        public string? CompanyAr { get; set; }
 
         [Required(ErrorMessage = "Source is required")]
         [Display(Name = "Lead Source")]
@@ -78,7 +78,7 @@ namespace BIMS.Models
 
         [Display(Name = "Assigned To")]
         [StringLength(100, ErrorMessage = "Assigned to cannot exceed 100 characters")]
-        public string AssignedTo { get; set; } // User ID or Name
+        public string? AssignedTo { get; set; } // User ID or Name (optional / nullable)
 
         // Navigation properties
         public virtual ICollection<Proposal> Proposals { get; set; } = new List<Proposal>();
