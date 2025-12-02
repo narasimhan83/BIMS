@@ -143,6 +143,15 @@
                                 <a asp-controller="InsurancePlans" asp-action="Index" class="dropdown-item">
                                     <span>🛡️</span> @(currentLang == "ar" ? "خطط التأمين" : "Insurance Plans")
                                 </a>
+                                <a asp-controller="PlanDocuments" asp-action="Index" class="dropdown-item">
+                                    <span>📄</span> @(currentLang == "ar" ? "مستندات الخطة" : "Plan Documents")
+                                </a>
+                                <a asp-controller="ProviderNetworks" asp-action="Index" class="dropdown-item">
+                                    <span>🌐</span> @(currentLang == "ar" ? "شبكات المزودين" : "Provider Networks")
+                                </a>
+                                <a asp-controller="PlanNetworks" asp-action="Index" class="dropdown-item">
+                                    <span>🧭</span> @(currentLang == "ar" ? "شبكات الخطة" : "Plan Networks")
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <div class="dropdown-submenu-header">@(currentLang == "ar" ? "🚗 تأمين المركبات" : "🚗 Motors")</div>
                                 <a asp-controller="CoverageCategories" asp-action="Index" class="dropdown-item dropdown-subitem">
@@ -174,6 +183,12 @@
                                 </a>
                                 <a asp-controller="PlanAdditionalCovers" asp-action="Index" class="dropdown-item dropdown-subitem">
                                     <span>➕</span> @(currentLang == "ar" ? "تغطيات الخطة الإضافية" : "Plan Additional Cover")
+                                </a>
+                                <a asp-controller="PlanConditions" asp-action="Index" class="dropdown-item dropdown-subitem">
+                                    <span>⚖️</span> @(currentLang == "ar" ? "شروط الخطة" : "Plan Conditions")
+                                </a>
+                                <a asp-controller="RenewalRules" asp-action="Index" class="dropdown-item dropdown-subitem">
+                                    <span>♻️</span> @(currentLang == "ar" ? "قواعد التجديد" : "Renewal Rules")
                                 </a>
                             </div>
                         </div>

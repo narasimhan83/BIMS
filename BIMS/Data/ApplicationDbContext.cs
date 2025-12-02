@@ -57,6 +57,11 @@ namespace BIMS.Data
         public DbSet<PlanBenefits> PlanBenefits { get; set; }
         public DbSet<PlanExcess> PlanExcesses { get; set; }
         public DbSet<PlanAdditionalCover> PlanAdditionalCovers { get; set; }
+        public DbSet<PlanCondition> PlanConditions { get; set; }
+        public DbSet<PlanNetwork> PlanNetworks { get; set; }
+        public DbSet<RenewalRule> RenewalRules { get; set; }
+        public DbSet<ProviderNetwork> ProviderNetworks { get; set; }
+        public DbSet<PlanDocument> PlanDocuments { get; set; }
         public DbSet<ComprehensiveTariff> ComprehensiveTariffs { get; set; }
         public DbSet<ThirdPartyTariff> ThirdPartyTariffs { get; set; }
         public DbSet<CommercialTariff> CommercialTariffs { get; set; }
@@ -376,11 +381,57 @@ namespace BIMS.Data
                 .WithMany()
                 .HasForeignKey(pac => pac.InsurancePlanId)
                 .OnDelete(DeleteBehavior.Restrict);
-
+ 
             builder.Entity<PlanAdditionalCover>()
                 .HasOne(pac => pac.AdditionalCover)
                 .WithMany()
                 .HasForeignKey(pac => pac.AdditionalCoverId)
+                .OnDelete(DeleteBehavior.Restrict);
+  
+            // Configure PlanCondition relationships
+            builder.Entity<PlanCondition>()
+                .HasOne(pc => pc.InsurancePlan)
+                .WithMany()
+                .HasForeignKey(pc => pc.InsurancePlanId)
+                .OnDelete(DeleteBehavior.Restrict);
+  
+            builder.Entity<PlanCondition>()
+                .HasOne(pc => pc.SpecialCondition)
+                .WithMany()
+                .HasForeignKey(pc => pc.SpecialConditionId)
+                .OnDelete(DeleteBehavior.Restrict);
+ 
+            // Configure PlanNetwork relationships
+            builder.Entity<PlanNetwork>()
+                .HasOne(pn => pn.InsurancePlan)
+                .WithMany()
+                .HasForeignKey(pn => pn.InsurancePlanId)
+                .OnDelete(DeleteBehavior.Restrict);
+ 
+            builder.Entity<PlanNetwork>()
+                .HasOne(pn => pn.ProviderNetwork)
+                .WithMany()
+                .HasForeignKey(pn => pn.ProviderNetworkId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure PlanDocument relationships
+            builder.Entity<PlanDocument>()
+                .HasOne(pd => pd.InsurancePlan)
+                .WithMany()
+                .HasForeignKey(pd => pd.InsurancePlanId)
+                .OnDelete(DeleteBehavior.Restrict);
+ 
+            // Configure RenewalRule relationships
+            builder.Entity<RenewalRule>()
+                .HasOne(rr => rr.InsurancePlan)
+                .WithMany()
+                .HasForeignKey(rr => rr.InsurancePlanId)
+                .OnDelete(DeleteBehavior.Restrict);
+ 
+            builder.Entity<RenewalRule>()
+                .HasOne(rr => rr.LineOfBusiness)
+                .WithMany()
+                .HasForeignKey(rr => rr.LineOfBusinessId)
                 .OnDelete(DeleteBehavior.Restrict);
  
             // Configure LineOfBusiness relationships
