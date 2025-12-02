@@ -52,6 +52,7 @@ namespace BIMS.Data
         public DbSet<LineOfBusiness> LinesOfBusiness { get; set; }
         public DbSet<ProductClass> ProductClasses { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
+        public DbSet<CoverageCategory> CoverageCategories { get; set; }
         public DbSet<PlanExcess> PlanExcesses { get; set; }
         public DbSet<ComprehensiveTariff> ComprehensiveTariffs { get; set; }
         public DbSet<ThirdPartyTariff> ThirdPartyTariffs { get; set; }
@@ -97,6 +98,25 @@ namespace BIMS.Data
                 .HasOne(pt => pt.ProductClass)
                 .WithMany(pc => pc.ProductTypes)
                 .HasForeignKey(pt => pt.ProductClassId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure CoverageCategory relationships
+            builder.Entity<CoverageCategory>()
+                .HasOne(cc => cc.ProductClass)
+                .WithMany()
+                .HasForeignKey(cc => cc.ProductClassId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<CoverageCategory>()
+                .HasOne(cc => cc.ProductType)
+                .WithMany()
+                .HasForeignKey(cc => cc.ProductTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<CoverageCategory>()
+                .HasOne(cc => cc.VehicleCategory)
+                .WithMany()
+                .HasForeignKey(cc => cc.VehicleCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Configure InsuranceClient relationships
