@@ -1,0 +1,325 @@
+@model IEnumerable<BIMS.Models.PlanBenefits>
+@{
+    ViewData["Title"] = "Plan Benefits";
+    var currentLang = Context.Session.GetString("Language") ?? "en";
+}
+
+<div class="masters-container">
+    <div class="masters-header">
+        <h1>
+            <i class="icon">🛡️</i>
+            @(currentLang == "ar" ? "منافع الخطة" : "Plan Benefits")
+        </h1>
+        <a asp-action="Create" class="btn-create">
+            <span>➕</span>
+            @(currentLang == "ar" ? "إضافة منفعة خطة" : "Add Plan Benefit")
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            ✓ @TempData["SuccessMessage"]
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-error">
+            ⚠ @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>@(currentLang == "ar" ? "خطة التأمين" : "Insurance Plan")</th>
+                    <th>@(currentLang == "ar" ? "نوع المنفعة" : "Benefit Type")</th>
+                    <th>@(currentLang == "ar" ? "مشمولة" : "Is Covered")</th>
+                    <th>@(currentLang == "ar" ? "حد المنفعة" : "Limit Amount")</th>
+                    <th>@(currentLang == "ar" ? "مبلغ التحمل" : "Excess Amount")</th>
+                    <th>@(currentLang == "ar" ? "ملاحظات" : "Remarks")</th>
+                    <th>@(currentLang == "ar" ? "الحالة" : "Status")</th>
+                    <th>@(currentLang == "ar" ? "تاريخ الإنشاء" : "Created Date")</th>
+                    <th>@(currentLang == "ar" ? "الإجراءات" : "Actions")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    var plan = item.InsurancePlan;
+                                    string planText;
+                                    if (plan == null)
+                                    {
+                                        planText = "-";
+                                    }
+                                    else
+                                    {
+                                        planText = currentLang == "ar" && !string.IsNullOrEmpty(plan.PlanNameAr)
+                                            ? plan.PlanNameAr
+                                            : plan.PlanName;
+                                    }
+                                }
+                                @planText
+                            </td>
+                            <td>
+                                @{
+                                    var bt = item.BenefitType;
+                                    string btText;
+                                    if (bt == null)
+                                    {
+                                        btText = "-";
+                                    }
+                                    else
+                                    {
+                                        btText = currentLang == "ar" && !string.IsNullOrEmpty(bt.BenefitTypeNameAr)
+                                            ? bt.BenefitTypeNameAr
+                                            : bt.BenefitTypeName;
+                                    }
+                                }
+                                @btText
+                            </td>
+                            <td>
+                                @if (item.IsCovered == true)
+                                {
+                                    <span class="badge badge-success">@(currentLang == "ar" ? "نعم" : "Yes")</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">@(currentLang == "ar" ? "لا" : "No")</span>
+                                }
+                            </td>
+                            <td>@(item.LimitAmount.HasValue ? item.LimitAmount.Value.ToString("N2") : "-")</td>
+                            <td>@(item.ExcessAmount.HasValue ? item.ExcessAmount.Value.ToString("N2") : "-")</td>
+                            <td class="remarks-cell">@item.Remarks</td>
+                            <td>
+                                @if (item.IsActive == true)
+                                {
+                                    <span class="badge badge-success">
+                                        @(currentLang == "ar" ? "نشط" : "Active")
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">
+                                        @(currentLang == "ar" ? "غير نشط" : "Inactive")
+                                    </span>
+                                }
+                            </td>
+                            <td>
+                                @(item.CreatedDate.HasValue
+                                    ? item.CreatedDate.Value.ToLocalTime().ToString("dd/MM/yyyy")
+                                    : "-")
+                            </td>
+                            <td class="actions">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn-edit"
+                                   title="@(currentLang == "ar" ? "تعديل" : "Edit")">
+                                    <span>✏️</span>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn-delete"
+                                   title="@(currentLang == "ar" ? "حذف" : "Delete")">
+                                    <span>🗑️</span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="9" class="no-data">
+                            @(currentLang == "ar" ? "لا توجد منافع خطط" : "No plan benefits found")
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .masters-container {
+        padding: 20px;
+    }
+
+    .masters-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .masters-header h1 {
+        font-size: 28px;
+        color: var(--navy-dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-create {
+        padding: 12px 24px;
+        background: linear-gradient(135deg, var(--primary-teal), var(--teal-dark));
+        color: white;
+        border: none;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-create:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 166, 166, 0.3);
+    }
+
+    .alert {
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        animation: slideIn 0.3s ease;
+    }
+
+    .alert-success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .alert-error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .table-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .data-table thead {
+        background: linear-gradient(135deg, var(--navy-dark), var(--navy-medium));
+        color: white;
+    }
+
+    .data-table th {
+        padding: 12px 10px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .data-table td {
+        padding: 12px 10px;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 13px;
+    }
+
+    .data-table tbody tr:hover {
+        background: #f8f9fa;
+    }
+
+    .remarks-cell {
+        max-width: 280px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .actions {
+        display: flex;
+        gap: 6px;
+    }
+
+    .btn-edit,
+    .btn-delete {
+        padding: 6px 9px;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 14px;
+    }
+
+    .btn-edit {
+        background: #ffc107;
+        color: white;
+    }
+
+    .btn-edit:hover {
+        background: #e0a800;
+        transform: scale(1.05);
+    }
+
+    .btn-delete {
+        background: #dc3545;
+        color: white;
+    }
+
+    .btn-delete:hover {
+        background: #c82333;
+        transform: scale(1.05);
+    }
+
+    .badge {
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .badge-success {
+        background: #28a745;
+        color: white;
+    }
+
+    .badge-danger {
+        background: #dc3545;
+        color: white;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 30px 10px;
+        color: #888;
+        font-style: italic;
+    }
+
+    @@keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@media (max-width: 992px) {
+        .data-table {
+            font-size: 12px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 8px 6px;
+        }
+    }
+</style>

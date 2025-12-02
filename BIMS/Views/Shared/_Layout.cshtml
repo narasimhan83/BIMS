@@ -145,6 +145,21 @@
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <div class="dropdown-submenu-header">@(currentLang == "ar" ? "🚗 تأمين المركبات" : "🚗 Motors")</div>
+                                <a asp-controller="CoverageCategories" asp-action="Index" class="dropdown-item dropdown-subitem">
+                                    <span>📂</span> @(currentLang == "ar" ? "فئات التغطية" : "Coverage Categories")
+                                </a>
+                                <a asp-controller="BenefitTypes" asp-action="Index" class="dropdown-item dropdown-subitem">
+                                    <span>🧾</span> @(currentLang == "ar" ? "أنواع المنافع" : "Benefit Types")
+                                </a>
+                                <a asp-controller="AdditionalCovers" asp-action="Index" class="dropdown-item dropdown-subitem">
+                                    <span>➕</span> @(currentLang == "ar" ? "تغطيات إضافية" : "Additional Covers")
+                                </a>
+                                <a asp-controller="SpecialConditions" asp-action="Index" class="dropdown-item dropdown-subitem">
+                                    <span>⚖️</span> @(currentLang == "ar" ? "الشروط الخاصة" : "Special Conditions")
+                                </a>
+                                <a asp-controller="PlanBenefits" asp-action="Index" class="dropdown-item dropdown-subitem">
+                                    <span>🛡️</span> @(currentLang == "ar" ? "منافع الخطة" : "Plan Benefits")
+                                </a>
                                 <a asp-controller="ComprehensiveTariffs" asp-action="Index" class="dropdown-item dropdown-subitem">
                                     <span>📊</span> @(currentLang == "ar" ? "تعرفة شاملة" : "Comprehensive Tariff")
                                 </a>
@@ -156,6 +171,9 @@
                                 </a>
                                 <a asp-controller="PlanExcesses" asp-action="Index" class="dropdown-item dropdown-subitem">
                                     <span>📊</span> @(currentLang == "ar" ? "تحملات الخطة" : "Plan Excess")
+                                </a>
+                                <a asp-controller="PlanAdditionalCovers" asp-action="Index" class="dropdown-item dropdown-subitem">
+                                    <span>➕</span> @(currentLang == "ar" ? "تغطيات الخطة الإضافية" : "Plan Additional Cover")
                                 </a>
                             </div>
                         </div>

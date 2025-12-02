@@ -53,10 +53,15 @@ namespace BIMS.Data
         public DbSet<ProductClass> ProductClasses { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<CoverageCategory> CoverageCategories { get; set; }
+        public DbSet<BenefitType> BenefitTypes { get; set; }
+        public DbSet<PlanBenefits> PlanBenefits { get; set; }
         public DbSet<PlanExcess> PlanExcesses { get; set; }
+        public DbSet<PlanAdditionalCover> PlanAdditionalCovers { get; set; }
         public DbSet<ComprehensiveTariff> ComprehensiveTariffs { get; set; }
         public DbSet<ThirdPartyTariff> ThirdPartyTariffs { get; set; }
         public DbSet<CommercialTariff> CommercialTariffs { get; set; }
+        public DbSet<AdditionalCover> AdditionalCovers { get; set; }
+        public DbSet<SpecialCondition> SpecialConditions { get; set; }
 
         // CRM DbSets
         public DbSet<Lead> Leads { get; set; }
@@ -92,33 +97,53 @@ namespace BIMS.Data
                 .WithMany(bt => bt.ProductClasses)
                 .HasForeignKey(pc => pc.BusinessTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
-
+ 
             // Configure ProductType relationships
             builder.Entity<ProductType>()
                 .HasOne(pt => pt.ProductClass)
                 .WithMany(pc => pc.ProductTypes)
                 .HasForeignKey(pt => pt.ProductClassId)
                 .OnDelete(DeleteBehavior.Restrict);
-
+ 
             // Configure CoverageCategory relationships
             builder.Entity<CoverageCategory>()
                 .HasOne(cc => cc.ProductClass)
                 .WithMany()
                 .HasForeignKey(cc => cc.ProductClassId)
                 .OnDelete(DeleteBehavior.Restrict);
-
+ 
             builder.Entity<CoverageCategory>()
                 .HasOne(cc => cc.ProductType)
                 .WithMany()
                 .HasForeignKey(cc => cc.ProductTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
-
+ 
             builder.Entity<CoverageCategory>()
                 .HasOne(cc => cc.VehicleCategory)
                 .WithMany()
                 .HasForeignKey(cc => cc.VehicleCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
+ 
+            // Configure BenefitType relationships
+            builder.Entity<BenefitType>()
+                .HasOne(bt => bt.VehicleCategory)
+                .WithMany()
+                .HasForeignKey(bt => bt.VehicleCategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
 
+            // Configure PlanBenefits relationships
+            builder.Entity<PlanBenefits>()
+                .HasOne(pbi => pbi.InsurancePlan)
+                .WithMany()
+                .HasForeignKey(pbi => pbi.InsurancePlanId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<PlanBenefits>()
+                .HasOne(pbi => pbi.BenefitType)
+                .WithMany()
+                .HasForeignKey(pbi => pbi.BenefitTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
+ 
             // Configure InsuranceClient relationships
             builder.Entity<InsuranceClient>()
                 .HasOne(ic => ic.Country)
@@ -343,6 +368,19 @@ namespace BIMS.Data
                 .HasOne(pe => pe.ValueBand)
                 .WithMany()
                 .HasForeignKey(pe => pe.ValueBandId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure PlanAdditionalCover relationships
+            builder.Entity<PlanAdditionalCover>()
+                .HasOne(pac => pac.InsurancePlan)
+                .WithMany()
+                .HasForeignKey(pac => pac.InsurancePlanId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<PlanAdditionalCover>()
+                .HasOne(pac => pac.AdditionalCover)
+                .WithMany()
+                .HasForeignKey(pac => pac.AdditionalCoverId)
                 .OnDelete(DeleteBehavior.Restrict);
  
             // Configure LineOfBusiness relationships
