@@ -64,8 +64,58 @@ namespace BIMS.Controllers
         // POST: Leads/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NameEn,NameAr,Email,Phone,CompanyEn,CompanyAr,Source,Status,PotentialValue,Notes,LastContactDate,CustomerId")] Lead lead)
+        public async Task<IActionResult> Create([Bind("Id,NameEn,NameAr,Email,Phone,CompanyEn,CompanyAr,Source,Status,PotentialValue,Notes,RequestDate,LastContactDate,CustomerId")] Lead lead)
         {
+            // Ensure a customer is selected
+            if (lead.CustomerId == 0)
+            {
+                ModelState.AddModelError(nameof(lead.CustomerId), "Customer is required");
+            }
+            else
+            {
+                // Auto-populate core lead fields from the selected customer
+                var customer = await _context.Customers
+                    .Include(c => c.CustomerGroup)
+                    .FirstOrDefaultAsync(c => c.Id == lead.CustomerId && c.IsActive);
+
+                if (customer == null)
+                {
+                    ModelState.AddModelError(nameof(lead.CustomerId), "Selected customer not found or inactive");
+                }
+                else
+                {
+                    // Auto-fill required fields from customer
+                    lead.NameEn = customer.CustomerName ?? customer.CustomerNameAr ?? "Customer";
+                    lead.NameAr = customer.CustomerNameAr ?? customer.CustomerName ?? "Customer";
+                    lead.Email = string.IsNullOrWhiteSpace(customer.Email)
+                        ? "no-email@placeholder.local"
+                        : customer.Email;
+                    lead.Phone = string.IsNullOrWhiteSpace(customer.MobilePhone)
+                        ? "00000000"
+                        : customer.MobilePhone;
+                    lead.CompanyEn = lead.CompanyEn ?? customer.CustomerGroup?.GroupName;
+                    lead.CompanyAr = lead.CompanyAr ?? customer.CustomerGroup?.GroupName;
+
+                    // If PotentialValue not provided in UI, default it to 0
+                    if (lead.PotentialValue == 0)
+                    {
+                        lead.PotentialValue = 0m;
+                    }
+
+                    // Clear model state entries for fields we just populated so validation reruns
+                    ModelState.Remove(nameof(lead.NameEn));
+                    ModelState.Remove(nameof(lead.NameAr));
+                    ModelState.Remove(nameof(lead.Email));
+                    ModelState.Remove(nameof(lead.Phone));
+                    ModelState.Remove(nameof(lead.CompanyEn));
+                    ModelState.Remove(nameof(lead.CompanyAr));
+                    ModelState.Remove(nameof(lead.PotentialValue));
+
+                    // Re-validate the model with updated values
+                    TryValidateModel(lead);
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 lead.CreatedDate = DateTime.Now;
@@ -104,7 +154,7 @@ namespace BIMS.Controllers
         // POST: Leads/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NameEn,NameAr,Email,Phone,CompanyEn,CompanyAr,Source,Status,PotentialValue,Notes,CreatedDate,LastContactDate,AssignedTo,CustomerId")] Lead lead)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NameEn,NameAr,Email,Phone,CompanyEn,CompanyAr,Source,Status,PotentialValue,Notes,RequestDate,CreatedDate,LastContactDate,AssignedTo,CustomerId")] Lead lead)
         {
             if (id != lead.Id)
             {

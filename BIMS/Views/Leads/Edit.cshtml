@@ -297,6 +297,21 @@
                     <span asp-validation-for="AssignedTo" class="text-danger"></span>
                 </div>
 
+                <div class="form-group">
+                    <label asp-for="RequestDate" class="form-label">
+                        @if (currentLang == "ar")
+                        {
+                            <span>تاريخ الطلب <span class="required">*</span></span>
+                        }
+                        else
+                        {
+                            <span>Request Date <span class="required">*</span></span>
+                        }
+                    </label>
+                    <input asp-for="RequestDate" type="date" class="form-control" />
+                    <span asp-validation-for="RequestDate" class="text-danger"></span>
+                </div>
+
                 <div class="form-group full-width">
                     <label asp-for="Notes" class="form-label">
                         @if (currentLang == "ar")

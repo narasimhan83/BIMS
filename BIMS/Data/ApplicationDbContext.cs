@@ -59,6 +59,8 @@ namespace BIMS.Data
 
         // CRM DbSets
         public DbSet<Lead> Leads { get; set; }
+        public DbSet<LeadEnquiry> LeadEnquiries { get; set; }
+        public DbSet<LeadEnquiryVehicle> LeadEnquiryVehicles { get; set; }
         public DbSet<Proposal> Proposals { get; set; }
         public DbSet<LeadSource> LeadSources { get; set; }
 
@@ -202,6 +204,25 @@ namespace BIMS.Data
                 .WithMany()
                 .HasForeignKey(l => l.CustomerId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            // Configure LeadEnquiry relationships
+            builder.Entity<LeadEnquiry>()
+                .HasOne(le => le.Lead)
+                .WithMany(l => l.LeadEnquiries)
+                .HasForeignKey(le => le.LeadId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<LeadEnquiry>()
+                .HasOne(le => le.ProductClass)
+                .WithMany()
+                .HasForeignKey(le => le.ProductClassId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<LeadEnquiry>()
+                .HasOne(le => le.ProductType)
+                .WithMany()
+                .HasForeignKey(le => le.ProductTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Configure Customer-Agent relationships
             builder.Entity<Customer>()

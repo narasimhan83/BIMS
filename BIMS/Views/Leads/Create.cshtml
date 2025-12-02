@@ -44,7 +44,6 @@
                 </div>
                 <div id="resultsList" class="results-list"></div>
             </div>
-            <input type="hidden" asp-for="CustomerId" id="selectedCustomerId" />
             <div id="selectedCustomerDetails" class="selected-customer-details" style="display: none;">
                 <h4>@(currentLang == "ar" ? "بيانات العميل المحدد:" : "Selected Customer Details:")</h4>
                 <div class="customer-details-grid">
@@ -88,6 +87,7 @@
 
     <div class="form-content">
         <form asp-action="Create" method="post" class="master-form" id="leadForm">
+            <input type="hidden" asp-for="CustomerId" id="selectedCustomerId" />
             <div class="form-grid">
                 <div class="form-group">
                     <label asp-for="Source" class="form-label">
@@ -128,6 +128,21 @@
                     <span asp-validation-for="Status" class="text-danger"></span>
                 </div>
 
+
+                <div class="form-group">
+                    <label asp-for="RequestDate" class="form-label">
+                        @if (currentLang == "ar")
+                        {
+                            <span>تاريخ الطلب <span class="required">*</span></span>
+                        }
+                        else
+                        {
+                            <span>Request Date <span class="required">*</span></span>
+                        }
+                    </label>
+                    <input asp-for="RequestDate" type="date" class="form-control" />
+                    <span asp-validation-for="RequestDate" class="text-danger"></span>
+                </div>
 
                 <div class="form-group full-width">
                     <label asp-for="Notes" class="form-label">

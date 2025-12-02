@@ -65,6 +65,11 @@ namespace BIMS.Models
         [StringLength(500, ErrorMessage = "Notes cannot exceed 500 characters")]
         public string Notes { get; set; }
 
+        [Required(ErrorMessage = "Request Date is required")]
+        [Display(Name = "Request Date")]
+        [DataType(DataType.Date)]
+        public DateTime RequestDate { get; set; } = DateTime.Today;
+
         [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
@@ -75,7 +80,8 @@ namespace BIMS.Models
         [StringLength(100, ErrorMessage = "Assigned to cannot exceed 100 characters")]
         public string AssignedTo { get; set; } // User ID or Name
 
-        // Navigation property
+        // Navigation properties
         public virtual ICollection<Proposal> Proposals { get; set; } = new List<Proposal>();
+        public virtual ICollection<LeadEnquiry> LeadEnquiries { get; set; } = new List<LeadEnquiry>();
     }
 }
